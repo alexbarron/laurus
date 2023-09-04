@@ -1,11 +1,14 @@
 class DeveloperAppsController < ApplicationController
     before_action :set_developer_app, only: [:show, :edit, :update]
+    before_action :authenticate_user!
+    before_action :authorized_user, only: [:show, :edit, :update]
 
     def index
-        @developer_apps = DeveloperApp.all
+        @developer_apps = current_user.developer_apps
     end
 
     def show
+        @app_membership = @developer_app.app_memberships.where(user_id: current_user.id).first
     end
 
     def new
@@ -42,5 +45,12 @@ class DeveloperAppsController < ApplicationController
 
         def set_developer_app
             @developer_app = DeveloperApp.find(params[:id])
+        end
+
+        def authorized_user
+            unless @developer_app.members.include?(current_user)
+                flash[:warning] = "Unauthorized request"
+                redirect_to(developer_apps_path, status: :see_other)
+            end
         end
 end

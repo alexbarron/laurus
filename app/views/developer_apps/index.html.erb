@@ -1,5 +1,7 @@
 <h1>Developer Apps</h1>
 
+<%= button_to "New App", new_developer_app_path, class: "btn btn-primary" %>
+
 <% @developer_apps.each do |developer_app| %>
 
     <div class="card">

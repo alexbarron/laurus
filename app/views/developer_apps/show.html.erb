@@ -1,3 +1,11 @@
 <h3><%= @developer_app.name %></h3>
-<span><strong>Client ID:</strong> <%= @developer_app.client_id %></span>
-<span><strong>Created:</strong> <%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
+<span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
+<span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
+<span>
+    <strong>Role: </strong>
+    <% if @app_membership.admin %>
+        Admin
+    <% else %>
+        Read-only
+    <% end %>
+</span>
