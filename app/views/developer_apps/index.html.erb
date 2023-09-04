@@ -1,0 +1,14 @@
+<h1>Developer Apps</h1>
+
+<% @developer_apps.each do |developer_app| %>
+
+    <div class="card">
+        <h3 class="card-header"><%= developer_app.name %></h5>
+        <div class="card-body">
+            <p class="card-text"><strong>Client ID:</strong> <%= developer_app.client_id %></p>
+            <p class="card-text"><strong>Created:</strong> <%= developer_app.created_at.strftime("%b %d, %Y") %></p>
+            <%= link_to "Manage", developer_app, class: "btn btn-primary" %>
+        </div>
+    </div>
+
+<% end %>
