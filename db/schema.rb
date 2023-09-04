@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_122601) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_04_140321) do
+  create_table "app_memberships", force: :cascade do |t|
+    t.boolean "admin", default: false
+    t.integer "developer_app_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["developer_app_id"], name: "index_app_memberships_on_developer_app_id"
+    t.index ["user_id"], name: "index_app_memberships_on_user_id"
+  end
+
   create_table "developer_apps", force: :cascade do |t|
     t.string "name"
     t.string "client_id"
@@ -31,4 +41,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_122601) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "app_memberships", "developer_apps"
+  add_foreign_key "app_memberships", "users"
 end
