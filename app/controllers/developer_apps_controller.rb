@@ -8,7 +8,7 @@ class DeveloperAppsController < ApplicationController
     end
 
     def show
-        @app_membership = @developer_app.app_memberships.where(user_id: current_user.id).first
+        @app_memberships = @developer_app.app_memberships
     end
 
     def new
@@ -48,7 +48,7 @@ class DeveloperAppsController < ApplicationController
         end
 
         def authorized_user
-            unless @developer_app.members.include?(current_user)
+            unless @developer_app.members.include?(current_user) || current_user.platform_admin?
                 flash[:warning] = "Unauthorized request"
                 redirect_to(developer_apps_path, status: :see_other)
             end

@@ -1,11 +1,20 @@
 <h3><%= @developer_app.name %></h3>
 <span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
 <span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
-<span>
-    <strong>Role: </strong>
-    <% if @app_membership.admin %>
-        Admin
-    <% else %>
-        Read-only
-    <% end %>
-</span>
+
+<h4>Team Members</h4>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+    <th>User</th>
+    <th>Role</th>
+    </tr>
+    </thead>
+<% @app_memberships.each do |app_membership| %>
+    <tr>
+        <td><%= app_membership.user.name %></td>
+        <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
+    </tr>
+<% end %>
+</table>
