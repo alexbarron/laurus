@@ -1,15 +1,15 @@
-<h1>Developer Apps</h1>
+<h1>My Apps</h1>
 
 <%= button_to "New App", new_developer_app_path, class: "btn btn-primary" %>
 
 <% @developer_apps.each do |developer_app| %>
-
-    <div class="card">
-        <h3 class="card-header"><%= developer_app.name %></h5>
-        <div class="card-body">
-            <p class="card-text"><strong>Client ID:</strong> <%= developer_app.client_id %></p>
-            <p class="card-text"><strong>Created:</strong> <%= developer_app.created_at.strftime("%b %d, %Y") %></p>
-            <%= link_to "Manage", developer_app, class: "btn btn-primary" %>
+    
+    <div class="app-card">
+        <h3><%= developer_app.name %></h5>
+        <div>
+            <span><strong>Client ID:</strong> <%= developer_app.client_id %></span><br />
+            <span><strong>Created:</strong> <%= developer_app.created_at.strftime("%b %d, %Y") %></span><br /><br />
+            <div class="text-center"><%= link_to "Manage", developer_app, class: "btn btn-primary" %></div>
         </div>
     </div>
 

@@ -105,3 +105,19 @@ input, textarea, select, .uneditable-input {
 input {
     height: auto !important;
 }
+
+/* developer apps */
+
+div.app-card {
+    display: inline-block;
+    width: 300px;
+    height: 150px;
+    border:1px solid lightgray;
+    padding-left: 10px;
+    margin: 10px;
+    
+    a {
+        display: center;
+        margin: -20px;
+    }
+}
