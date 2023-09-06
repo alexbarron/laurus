@@ -31,6 +31,7 @@ class DeveloperAppsController < ApplicationController
 
     def update
         if @developer_app.update(developer_app_params)
+            flash[:success] = "Developer app successfully updated"
             redirect_to @developer_app
         else
             render :edit, status: :unprocessable_entity

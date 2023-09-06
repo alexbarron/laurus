@@ -1,2 +1,4 @@
-<h1>Endpoints#show</h1>
-<p>Find me in app/views/endpoints/show.html.erb</p>
+<h3 class="center"><%= "#{@endpoint.method} #{@endpoint.path}" %></h3>
+<p><%= @endpoint.description %></p>
+
+<%= link_to "Edit Endpoint", edit_endpoint_path(@endpoint), class: "btn btn-primary" %>

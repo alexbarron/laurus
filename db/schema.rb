@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_06_112548) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_06_144657) do
   create_table "app_memberships", force: :cascade do |t|
     t.boolean "admin", default: false
     t.integer "developer_app_id", null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_112548) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["path", "method"], name: "index_endpoints_on_path_and_method", unique: true
   end
 
   create_table "users", force: :cascade do |t|
