@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_06_144657) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_111903) do
   create_table "app_memberships", force: :cascade do |t|
     t.boolean "admin", default: false
     t.integer "developer_app_id", null: false
@@ -37,6 +37,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_144657) do
     t.index ["path", "method"], name: "index_endpoints_on_path_and_method", unique: true
   end
 
+  create_table "grants", force: :cascade do |t|
+    t.integer "endpoint_id", null: false
+    t.integer "developer_app_id", null: false
+    t.string "permission_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["developer_app_id"], name: "index_grants_on_developer_app_id"
+    t.index ["endpoint_id", "developer_app_id"], name: "index_grants_on_endpoint_id_and_developer_app_id", unique: true
+    t.index ["endpoint_id"], name: "index_grants_on_endpoint_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -53,4 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_144657) do
 
   add_foreign_key "app_memberships", "developer_apps"
   add_foreign_key "app_memberships", "users"
+  add_foreign_key "grants", "developer_apps"
+  add_foreign_key "grants", "endpoints"
 end
