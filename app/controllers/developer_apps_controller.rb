@@ -1,5 +1,5 @@
 class DeveloperAppsController < ApplicationController
-    before_action :set_developer_app, only: [:show, :edit, :update]
+    before_action :set_developer_app, only: [:show, :edit, :update, :manage_grants]
     before_action :authenticate_user!
     before_action :authorized_for_app?, only: [:show, :edit, :update]
 
@@ -34,14 +34,18 @@ class DeveloperAppsController < ApplicationController
             flash[:success] = "Developer app successfully updated"
             redirect_to @developer_app
         else
-            render :edit, status: :unprocessable_entity
+            render :manage_grants, status: :unprocessable_entity
         end
+    end
+
+    def manage_grants
+        @endpoints = Endpoint.all
     end
 
     private
         
         def developer_app_params
-            params.require(:developer_app).permit(:name)
+            params.require(:developer_app).permit(:name, endpoint_ids: [])
         end
 
         def set_developer_app

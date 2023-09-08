@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :developer_apps
 
   get 'static_pages/home'
+  get 'developer_apps/:id/manage_grants', to: 'developer_apps#manage_grants'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

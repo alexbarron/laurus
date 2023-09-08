@@ -1,0 +1,16 @@
+<h3 class="center">Managing Grants For: <%= @developer_app.name %></h3>
+
+<%= form_for @developer_app do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+        <div class="input-group">
+        <% @endpoints.each do |endpoint| %>
+            <span class="input-group-addon">
+                <%= check_box_tag "developer_app[endpoint_ids][]", endpoint.id, f.object.endpoints.include?(endpoint) %>
+            </span>
+            <%= label_tag :endpoint_id, "#{endpoint.method} #{endpoint.path}", class: 'form-control' %>
+        <% end %>
+        </div>
+
+    <%= f.submit %>
+<% end %>
+

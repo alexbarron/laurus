@@ -40,7 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_111903) do
   create_table "grants", force: :cascade do |t|
     t.integer "endpoint_id", null: false
     t.integer "developer_app_id", null: false
-    t.string "permission_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["developer_app_id"], name: "index_grants_on_developer_app_id"
