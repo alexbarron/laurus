@@ -6,6 +6,16 @@ class DeveloperApp < ApplicationRecord
 
     before_create :generate_client_id
 
+    def archive
+        self.archived_at = Time.now
+        self.save!
+    end
+
+    def unarchive
+        self.archived_at = nil
+        self.save!
+    end
+
     private
 
         def generate_client_id

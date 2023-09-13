@@ -1,7 +1,7 @@
 class DeveloperAppsController < ApplicationController
-    before_action :set_developer_app, only: [:show, :edit, :update, :manage_grants]
+    before_action :set_developer_app, only: [:show, :edit, :update, :manage_grants, :archive, :unarchive]
     before_action :authenticate_user!
-    before_action :authorized_for_app?, only: [:show, :edit, :update]
+    before_action :authorized_for_app?, only: [:show, :edit, :update, :archive, :unarchive]
 
     def index
         @developer_apps = current_user.developer_apps.paginate(page: params[:page])
@@ -41,6 +41,18 @@ class DeveloperAppsController < ApplicationController
 
     def manage_grants
         @endpoints = Endpoint.all
+    end
+
+    def archive
+        @developer_app.archive
+        flash[:success] = "Developer app archived"
+        redirect_to @developer_app
+    end
+
+    def unarchive
+        @developer_app.unarchive
+        flash[:success] = "Developer app reactivated"
+        redirect_to @developer_app
     end
 
     private

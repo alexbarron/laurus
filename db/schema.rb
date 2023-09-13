@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_111903) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_13_140341) do
   create_table "app_memberships", force: :cascade do |t|
     t.boolean "admin", default: false
     t.integer "developer_app_id", null: false
@@ -26,6 +26,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_111903) do
     t.string "client_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.index ["archived_at"], name: "index_developer_apps_on_archived_at"
   end
 
   create_table "endpoints", force: :cascade do |t|

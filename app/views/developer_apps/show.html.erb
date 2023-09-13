@@ -1,6 +1,8 @@
 <h3><%= @developer_app.name %></h3>
 <span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
 <span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
+<span><strong>Status: </strong><%= @developer_app.archived_at? ? "Archived" : "Active" %>
+
 
 <div class="row">
     <div class="col-lg-6">
@@ -48,3 +50,11 @@
     </div>
 </div>
 
+<h4>Danger Zone</h4>
+<div>
+    <% if @developer_app.archived_at? %>
+        <%= link_to "Unarchive", "/developer_apps/#{@developer_app.id}/unarchive", class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+    <% else %>
+        <%= link_to "Archive", "/developer_apps/#{@developer_app.id}/archive", class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+    <% end %>
+</div>
