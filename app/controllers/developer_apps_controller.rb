@@ -9,6 +9,7 @@ class DeveloperAppsController < ApplicationController
 
     def show
         @app_memberships = @developer_app.app_memberships
+        @endpoints = @developer_app.endpoints.ordered_by_path
     end
 
     def new

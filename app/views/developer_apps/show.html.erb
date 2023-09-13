@@ -2,43 +2,49 @@
 <span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
 <span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
 
-<h4>Grants</h4>
+<div class="row">
+    <div class="col-lg-6">
+    <h4>Grants</h4>
 
-<% if user_signed_in? && current_user.platform_admin? %>
-    <% if @developer_app.grants.any? %>
-        <table class="table table-hover">
-            <thead class="thead-dark">
-            <tr>
-            <th>Endpoint</th>
-            </tr>
-            </thead>
-        <% @developer_app.endpoints.each do |endpoint| %>
-            <tr>
-                <td><%= "#{endpoint.method} #{endpoint.path}" %></td>
-            </tr>
+    <% if user_signed_in? && current_user.platform_admin? %>
+        <% if @developer_app.grants.any? %>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                <th>Endpoint</th>
+                </tr>
+                </thead>
+            <% @endpoints.each do |endpoint| %>
+                <tr>
+                    <td><%= "#{endpoint.method} #{endpoint.path}" %></td>
+                </tr>
+            <% end %>
+            </table>
+            <%= link_to "Edit Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
+        <% else %>
+            <p>This app has not been granted any endpoints.</p>
+            <%= link_to "Edit Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
         <% end %>
-        </table>
-        <%= link_to "Edit Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
-    <% else %>
-        <p>This app has not been granted any endpoints.</p>
-        <%= link_to "Edit Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
     <% end %>
-<% end %>
+    </div>
+    
+    <div class="col-lg-6">
+    <h4>Team Members</h4>
 
-<h4>Team Members</h4>
-
-<table class="table table-hover">
-    <thead class="thead-dark">
-    <tr>
-    <th>User</th>
-    <th>Role</th>
-    </tr>
-    </thead>
-<% @app_memberships.each do |app_membership| %>
-    <tr>
-        <td><%= app_membership.user.name %></td>
-        <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
-    </tr>
-<% end %>
-</table>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+        <th>User</th>
+        <th>Role</th>
+        </tr>
+        </thead>
+    <% @app_memberships.each do |app_membership| %>
+        <tr>
+            <td><%= app_membership.user.name %></td>
+            <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
+        </tr>
+    <% end %>
+    </table>
+    </div>
+</div>
 
