@@ -4,7 +4,7 @@ class DeveloperAppsController < ApplicationController
     before_action :authorized_for_app?, only: [:show, :edit, :update]
 
     def index
-        @developer_apps = current_user.developer_apps
+        @developer_apps = current_user.developer_apps.paginate(page: params[:page])
     end
 
     def show

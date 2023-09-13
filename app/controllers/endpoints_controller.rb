@@ -4,7 +4,7 @@ class EndpointsController < ApplicationController
   before_action :set_endpoint, only: [:show, :edit, :update]
 
   def index
-    @endpoints = Endpoint.all
+    @endpoints = Endpoint.paginate(page: params[:page])
   end
 
   def show
