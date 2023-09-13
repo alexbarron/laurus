@@ -6,11 +6,18 @@
 
 <% if user_signed_in? && current_user.platform_admin? %>
     <% if @developer_app.grants.any? %>
-        <ul>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+            <th>Endpoint</th>
+            </tr>
+            </thead>
         <% @developer_app.endpoints.each do |endpoint| %>
-            <li><%= "#{endpoint.method} #{endpoint.path}" %></li>
+            <tr>
+                <td><%= "#{endpoint.method} #{endpoint.path}" %></td>
+            </tr>
         <% end %>
-        </ul>
+        </table>
         <%= link_to "Edit Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
     <% else %>
         <p>This app has not been granted any endpoints.</p>
