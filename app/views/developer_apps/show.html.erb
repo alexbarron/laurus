@@ -49,11 +49,28 @@
     </div>
 </div>
 
-<h4>Danger Zone</h4>
-<div>
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Change Events</h4>
+        <div>
+            <ul>
+            <% @developer_app.change_events.each do |change_event| %>
+                <li><%= "#{change_event.created_at.strftime("%b %d, %Y at %H:%M %Z")} #{change_event.user.name} #{change_event.message}" %></li>
+            <% end %>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+
+    <h4>Danger Zone</h4>
+    <div>
     <% if @developer_app.archived_at? %>
         <%= link_to "Unarchive", "/developer_apps/#{@developer_app.id}/unarchive", class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
     <% else %>
         <%= link_to "Archive", "/developer_apps/#{@developer_app.id}/archive", class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
     <% end %>
+    </div>
+
+    </div>
 </div>

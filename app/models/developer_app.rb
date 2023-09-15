@@ -3,6 +3,7 @@ class DeveloperApp < ApplicationRecord
     has_many :members, through: :app_memberships, source: :user
     has_many :grants
     has_many :endpoints, through: :grants
+    has_many :change_events
 
     before_create :generate_client_id
 
