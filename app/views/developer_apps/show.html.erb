@@ -22,7 +22,7 @@
             <% end %>
             </table>
         <% else %>
-            <p>This app has not been granted any endpoints.</p> %>
+            <p>This app has not been granted any endpoints.</p>
         <% end %>
         <% if user_signed_in? && current_user.platform_admin? %>
             <%= link_to "Manage Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
@@ -54,9 +54,9 @@
         <h4>Change Events</h4>
         <div>
             <ul>
-            <% @developer_app.change_events.each do |change_event| %>
-                <li><%= "#{change_event.created_at.strftime("%b %d, %Y at %H:%M %Z")} #{change_event.user.name} #{change_event.message}" %></li>
-            <% end %>
+                <% @developer_app.versions.each do |version| %>
+                    <li><%= "#{User.find(version.whodunnit).name} changed #{version.changeset.keys.first} from #{version.changeset.first[1][0]} to #{version.changeset.first[1][1]}" %></li>
+                <% end %>
             </ul>
         </div>
     </div>

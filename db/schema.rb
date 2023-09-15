@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_115248) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_121024) do
   create_table "app_memberships", force: :cascade do |t|
     t.boolean "admin", default: false
     t.integer "developer_app_id", null: false
@@ -19,17 +19,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_115248) do
     t.datetime "updated_at", null: false
     t.index ["developer_app_id"], name: "index_app_memberships_on_developer_app_id"
     t.index ["user_id"], name: "index_app_memberships_on_user_id"
-  end
-
-  create_table "change_events", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "developer_app_id", null: false
-    t.string "event_type"
-    t.string "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["developer_app_id"], name: "index_change_events_on_developer_app_id"
-    t.index ["user_id"], name: "index_change_events_on_user_id"
   end
 
   create_table "developer_apps", force: :cascade do |t|
@@ -74,10 +63,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_115248) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object", limit: 1073741823
+    t.text "object_changes", limit: 1073741823
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
   add_foreign_key "app_memberships", "developer_apps"
   add_foreign_key "app_memberships", "users"
-  add_foreign_key "change_events", "developer_apps"
-  add_foreign_key "change_events", "users"
   add_foreign_key "grants", "developer_apps"
   add_foreign_key "grants", "endpoints"
 end
