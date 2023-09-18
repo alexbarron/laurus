@@ -44,8 +44,8 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 gem "sassc-rails"
 
-gem "devise"
-gem "securerandom"
+gem "devise", "4.9.2"
+gem "securerandom", "0.2.2"
 gem "will_paginate", "3.3.1"
 gem "bootstrap-will_paginate", "1.0.0"
 gem "paper_trail", "15.0.0"
