@@ -24,3 +24,4 @@ To Do List:
 * Automate creation/updating of endpoint objects in the app by parsing OpenAPI specs.
 * Customization of client ID format.
 * Ability for developers to subscribe to a newsletter and app notifications like downtime or hitting rate limits.
+* Customize user display time zone

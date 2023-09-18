@@ -3,7 +3,7 @@ class DeveloperApp < ApplicationRecord
     has_many :members, through: :app_memberships, source: :user
     has_many :grants
     has_many :endpoints, through: :grants
-    has_paper_trail skip: [:client_id, :id, :created_at, :updated_at]
+    has_paper_trail skip: [:id, :created_at, :updated_at]
 
     before_create :generate_client_id
 

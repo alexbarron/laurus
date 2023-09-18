@@ -3,6 +3,7 @@
 <span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
 <span><strong>Status: </strong><%= @developer_app.archived_at? ? "Archived" : "Active" %>
 
+<%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "btn btn-primary" %>
 
 <div class="row">
     <div class="col-lg-6">
@@ -51,11 +52,11 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <h4>Change Events</h4>
+        <h4>Changelog</h4>
         <div>
             <ul>
-                <% @developer_app.versions.each do |version| %>
-                    <li><%= "#{User.find(version.whodunnit).name} changed #{version.changeset.keys.first} from #{version.changeset.first[1][0]} to #{version.changeset.first[1][1]}" %></li>
+                <% @developer_app.versions.reverse.each do |version| %>
+                    <%= render_changelog_event(version) %>
                 <% end %>
             </ul>
         </div>
