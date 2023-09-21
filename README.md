@@ -8,6 +8,7 @@ This is a personal project of mine and very much a work in progress. I don't rec
 
 To Do List:
 * Full audit log for changes to apps, endpoints, and provisionings.
+* A useful seeds file
 * Full test suite.
 * Use Postgres in development.
 * A better README with setup instructions.
