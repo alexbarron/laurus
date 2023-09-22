@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-feature 'User creates a developer app' do
+feature 'Developer app creation' do
     context "as a non logged in user" do
-        scenario "cannot create a new developer app" do
+        scenario "gets redirected to sign in page" do
             visit new_developer_app_path
             expect(page).to have_content "You need to sign in or sign up before continuing."
         end
     end
-    
+
     context "as a logged in user" do
         before :each do
             @user = create(:user)
@@ -24,6 +24,12 @@ feature 'User creates a developer app' do
 
             expect(page).to have_content "Developer app successfully created"
             expect(page).to have_content app_name
+        end
+
+        scenario "cannot create a new developer if missing app name" do
+            visit new_developer_app_path
+            click_on "Submit"
+            expect(page).to have_content "Name can't be blank"
         end
     end
 end

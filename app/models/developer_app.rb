@@ -7,6 +7,8 @@ class DeveloperApp < ApplicationRecord
 
     before_create :generate_client_id
 
+    validates :name, presence: true
+
     def archive
         self.archived_at = Time.now
         self.save!
