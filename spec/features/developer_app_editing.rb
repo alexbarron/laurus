@@ -8,11 +8,11 @@ feature 'Developer app editing' do
     context "as a non logged in user" do
         scenario "gets redirected to sign in page" do
             visit edit_developer_app_path(@developer_app)
-            expect(page).to have_content "You need to sign in or sign up before continuing."
+            expect(page).to have_current_path(new_user_session_path)
         end
     end
 
-    context "as a logged in user" do
+    context "as a logged in authorized user" do
         before :each do
             @user = create(:user)
             sign_in(@user)
@@ -30,10 +30,24 @@ feature 'Developer app editing' do
                 fill_in "developer_app_name", with: edited_name
                 click_on "Submit"
 
+                expect(page).to have_current_path(developer_app_path(@developer_app))
                 expect(page).to have_content "Developer app successfully updated"
-                expect(page).to have_content edited_name
                 expect(page).to have_content "#{@user.name} changed name from #{original_name} to #{edited_name}"
             end
+        end
+    end
+
+    context "as a logged in unauthorized user" do
+        before :each do
+            @user = create(:user)
+            sign_in(@user)
+        end
+
+        scenario "cannot edit developer app they don't belong to" do
+            visit edit_developer_app_path(@developer_app)
+
+            expect(page).to have_current_path(developer_apps_path)
+            expect(page).to have_content "Unauthorized request"
         end
     end
 end

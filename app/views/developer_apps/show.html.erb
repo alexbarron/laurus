@@ -67,9 +67,9 @@
     <h4>Danger Zone</h4>
     <div>
     <% if @developer_app.archived_at? %>
-        <%= link_to "Unarchive", "/developer_apps/#{@developer_app.id}/unarchive", class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+        <%= link_to "Unarchive", unarchive_developer_app_path(@developer_app), class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
     <% else %>
-        <%= link_to "Archive", "/developer_apps/#{@developer_app.id}/archive", class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+        <%= link_to "Archive", archive_developer_app_path(@developer_app), class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
     <% end %>
     </div>
 

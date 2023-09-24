@@ -47,7 +47,7 @@ class DeveloperAppsController < ApplicationController
     def archive
         @developer_app.archive
         flash[:success] = "Developer app archived"
-        redirect_to @developer_app
+        redirect_to @developer_app, status: :see_other
     end
 
     def unarchive
