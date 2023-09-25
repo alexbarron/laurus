@@ -6,4 +6,6 @@ class Endpoint < ApplicationRecord
     validates :method, presence: true, inclusion: { in: %w[GET POST PUT PATCH DELETE] }
 
     scope :ordered_by_path, -> { order(path: :asc, method: :asc) }
+
+    alias_attribute :http_method, :method
 end
