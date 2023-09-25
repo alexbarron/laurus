@@ -12,15 +12,18 @@ feature 'Developer app archiving' do
             @app_membership = @developer_app.app_memberships.create(user_id: @user.id)
         end
 
-        scenario "can archive their developer app" do
+        scenario "can archive and unarchive their developer app" do
             with_versioning do 
                 visit developer_app_path(@developer_app)
-                
-                    click_on 'Archive'
-                    
+                click_on 'Archive'
 
                 expect(page).to have_content "Developer app archived"
                 expect(page).to have_content "Status: Archived"
+
+                click_on 'Unarchive'
+
+                expect(page).to have_content "Developer app reactivated"
+                expect(page).to have_content "Status: Active"
             end
         end
     end
@@ -31,7 +34,7 @@ feature 'Developer app archiving' do
             sign_in(@user)
         end
 
-        scenario "cannot edit developer app they don't belong to" do
+        scenario "cannot archive developer app they don't belong to" do
             visit edit_developer_app_path(@developer_app)
             expect(page).to have_content "Unauthorized request"
             expect(page).to have_content "My Apps"
