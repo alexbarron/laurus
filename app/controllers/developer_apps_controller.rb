@@ -20,7 +20,7 @@ class DeveloperAppsController < ApplicationController
         @developer_app = current_user.developer_apps.new(developer_app_params)
 
         if @developer_app.save
-            @developer_app.app_memberships.create(user_id: current_user.id)
+            @developer_app.app_memberships.create(user_id: current_user.id, admin: true)
             flash[:success] = "Developer app successfully created"
             redirect_to @developer_app
         else
