@@ -2,6 +2,7 @@ class DeveloperAppsController < ApplicationController
     before_action :set_developer_app, only: [:show, :edit, :update, :manage_grants, :archive, :unarchive]
     before_action :authenticate_user!
     before_action :authorized_for_app?, only: [:show, :edit, :update, :archive, :unarchive]
+    before_action :platform_admin?, only: [:manage_grants]
 
     def index
         @developer_apps = current_user.developer_apps.paginate(page: params[:page])
