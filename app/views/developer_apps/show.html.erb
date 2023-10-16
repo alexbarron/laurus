@@ -3,7 +3,9 @@
 <span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
 <span><strong>Status: </strong><%= @developer_app.archived_at? ? "Archived" : "Active" %>
 
-<%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "btn btn-primary" %>
+<% if @current_user.platform_admin? || @current_user_membership.admin? %>
+    <%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "btn btn-primary" %>
+<% end %>
 
 <div class="row">
     <div class="col-lg-6">
@@ -64,14 +66,16 @@
     
     <div class="col-lg-6">
 
-    <h4>Danger Zone</h4>
-    <div>
-    <% if @developer_app.archived_at? %>
-        <%= link_to "Unarchive", unarchive_developer_app_path(@developer_app), class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
-    <% else %>
-        <%= link_to "Archive", archive_developer_app_path(@developer_app), class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+    <% if @current_user.platform_admin? || @current_user_membership.admin? %>
+        <h4>Danger Zone</h4>
+        <div>
+        <% if @developer_app.archived_at? %>
+            <%= link_to "Unarchive", unarchive_developer_app_path(@developer_app), class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+        <% else %>
+            <%= link_to "Archive", archive_developer_app_path(@developer_app), class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+        <% end %>
+        </div>
     <% end %>
-    </div>
 
     </div>
 </div>

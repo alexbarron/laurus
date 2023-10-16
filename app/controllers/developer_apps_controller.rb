@@ -1,7 +1,9 @@
 class DeveloperAppsController < ApplicationController
     before_action :set_developer_app, only: [:show, :edit, :update, :manage_grants, :archive, :unarchive]
     before_action :authenticate_user!
-    before_action :authorized_for_app?, only: [:show, :edit, :update, :archive, :unarchive]
+    before_action :set_current_user_membership, only: [:show, :edit, :update, :archive, :unarchive]
+    before_action :authorized_to_view_app?, only: [:show]
+    before_action :authorized_to_edit_app?, only: [:edit, :update, :archive, :unarchive]
     before_action :platform_admin?, only: [:manage_grants]
 
     def index
@@ -67,10 +69,21 @@ class DeveloperAppsController < ApplicationController
             @developer_app = DeveloperApp.find(params[:id])
         end
 
-        def authorized_for_app?
-            unless @developer_app.members.include?(current_user) || current_user.platform_admin?
+        def set_current_user_membership
+            @current_user_membership = @developer_app.app_memberships.where(user_id: current_user.id).first
+        end
+
+        def authorized_to_view_app?
+            unless current_user.platform_admin? || !!@current_user_membership
                 flash[:warning] = "Unauthorized request"
                 redirect_to(developer_apps_path, status: :see_other)
+            end
+        end
+
+        def authorized_to_edit_app?
+            unless current_user.platform_admin? || (!!@current_user_membership && !!@current_user_membership.admin?)
+                flash[:warning] = "Unauthorized request"
+                redirect_to @developer_app
             end
         end
 end

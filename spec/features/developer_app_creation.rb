@@ -24,6 +24,9 @@ feature 'Developer app creation' do
 
             expect(page).to have_content "Developer app successfully created"
             expect(page).to have_content app_name
+
+            click_link 'My Apps'
+            expect(page).to have_content app_name
         end
 
         scenario "cannot create a new developer if missing app name" do
