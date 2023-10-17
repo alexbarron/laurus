@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :app_invitations, only: [:index, :show]
+  resources :app_invitations, only: [:index, :show, :destroy]
   devise_for :users, :controllers => {
     registrations: 'registrations'
   }

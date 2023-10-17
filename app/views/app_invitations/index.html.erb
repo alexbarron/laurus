@@ -1,14 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<h3>Received invitations</h3>
 
-<h1>App invitations</h1>
-
-<div id="app_invitations">
-  <% @app_invitations.each do |app_invitation| %>
-    <%= render app_invitation %>
-    <p>
-      <%= link_to "Show this app invitation", app_invitation %>
-    </p>
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Developer App</th>
+      <th>Invitee</th>
+      <th>Invitee Email</th>
+      <th>Role</th>
+      <th>Invited By</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <% @received_invitations.each do |app_invitation| %>
+    <%= render app_invitation, invitation_type: "received"%>
   <% end %>
-</div>
+</table>
 
-<%= link_to "New app invitation", new_app_invitation_path %>
+<h3>Sent invitations</h3>
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Developer App</th>
+      <th>Invitee</th>
+      <th>Invitee Email</th>
+      <th>Role</th>
+      <th>Invited By</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <% @sent_invitations.each do |app_invitation| %>
+    <%= render app_invitation, invitation_type: "sent" %>
+  <% end %>
+</table>

@@ -1,32 +1,15 @@
 <div id="<%= dom_id app_invitation %>">
-  <p>
-    <strong>Inviter:</strong>
-    <%= app_invitation.inviter_id %>
-  </p>
-
-  <p>
-    <strong>Invitee:</strong>
-    <%= app_invitation.invitee_id %>
-  </p>
-
-  <p>
-    <strong>Invitee email:</strong>
-    <%= app_invitation.invitee_email %>
-  </p>
-
-  <p>
-    <strong>Developer app:</strong>
-    <%= app_invitation.developer_app_id %>
-  </p>
-
-  <p>
-    <strong>Admin:</strong>
-    <%= app_invitation.admin %>
-  </p>
-
-  <p>
-    <strong>Status:</strong>
-    <%= app_invitation.status %>
-  </p>
-
+  <tr>
+      <td><%= app_invitation.developer_app.name %></td>
+      <td><%= app_invitation.invitee ? app_invitation.invitee.name : "" %></td>
+      <td><%= app_invitation.invitee_email %></td>
+      <td><%= app_invitation.admin ? "Admin" : "Read-only" %></td>
+      <td><%= app_invitation.inviter.name %></td>
+      <td><%= app_invitation.status %></td>
+      <% if invitation_type == "received" %>
+        <td><%= button_to "Accept", '#', class: 'btn btn-success' %>
+      <% elsif invitation_type == "sent"%>
+        <td><%= button_to "Delete", app_invitation, method: :delete, class: 'btn btn-danger' %></td>
+      <% end %>
+  </tr>
 </div>

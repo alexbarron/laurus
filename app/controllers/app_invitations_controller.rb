@@ -5,7 +5,8 @@ class AppInvitationsController < ApplicationController
 
   # GET /app_invitations or /app_invitations.json
   def index
-    @app_invitations = AppInvitation.all
+    @sent_invitations = current_user.sent_invitations
+    @received_invitations = current_user.received_invitations
   end
 
   # GET /app_invitations/1 or /app_invitations/1.json
