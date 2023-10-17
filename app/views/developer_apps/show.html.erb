@@ -49,6 +49,9 @@
         </tr>
     <% end %>
     </table>
+    <% if @current_user_membership.admin? %>
+        <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'btn btn-primary' %>
+    <% end %>
     </div>
 </div>
 
