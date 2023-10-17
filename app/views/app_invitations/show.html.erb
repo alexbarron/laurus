@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @app_invitation %>
+
+<div>
+  <%= link_to "Edit this app invitation", edit_app_invitation_path(@app_invitation) %> |
+  <%= link_to "Back to app invitations", app_invitations_path %>
+
+  <%= button_to "Destroy this app invitation", @app_invitation, method: :delete %>
+</div>

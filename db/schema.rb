@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_121024) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_17_130926) do
+  create_table "app_invitations", force: :cascade do |t|
+    t.integer "inviter_id"
+    t.integer "invitee_id"
+    t.string "invitee_email"
+    t.integer "developer_app_id"
+    t.boolean "admin"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "app_memberships", force: :cascade do |t|
     t.boolean "admin", default: false
     t.integer "developer_app_id", null: false

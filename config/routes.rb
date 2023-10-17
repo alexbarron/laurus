@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :app_invitations
   devise_for :users, :controllers => {
     registrations: 'registrations'
   }

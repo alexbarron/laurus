@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>App invitations</h1>
+
+<div id="app_invitations">
+  <% @app_invitations.each do |app_invitation| %>
+    <%= render app_invitation %>
+    <p>
+      <%= link_to "Show this app invitation", app_invitation %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New app invitation", new_app_invitation_path %>
