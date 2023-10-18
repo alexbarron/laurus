@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'App invitation creation' do
+feature 'App invitation creating' do
     context "as a non logged in user" do
         scenario "gets redirected to sign in page" do
             @developer_app = create(:developer_app)
