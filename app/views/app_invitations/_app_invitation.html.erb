@@ -7,7 +7,7 @@
       <td><%= app_invitation.inviter.name %></td>
       <td><%= app_invitation.status %></td>
       <% if invitation_type == "received" %>
-        <td><%= button_to "Accept", '#', class: 'btn btn-success' %>
+        <td><%= button_to "Accept", accept_app_invitation_path(developer_app_id: app_invitation.developer_app.id, id: app_invitation.id), method: :put, class: 'btn btn-success' unless app_invitation.status == "accepted" %>
       <% elsif invitation_type == "sent"%>
         <td><%= button_to "Delete", app_invitation, method: :delete, class: 'btn btn-danger' %></td>
       <% end %>

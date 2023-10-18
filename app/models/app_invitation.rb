@@ -5,6 +5,19 @@ class AppInvitation < ApplicationRecord
 
     before_create :set_status_pending
 
+    validates :invitee_email, uniqueness: { scope: :developer_app_id, message: "has already been invited to this developer app" }
+
+    def accept
+        app_membership = self.developer_app.app_memberships.new(
+            admin: self.admin,
+            user_id: self.invitee.id
+        )
+        if app_membership.save
+            self.status = "accepted"
+            self.save
+        end
+    end
+
     private
 
         def set_status_pending

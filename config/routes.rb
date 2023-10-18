@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'developer_apps/:id/manage_grants', to: 'developer_apps#manage_grants', as: :manage_developer_app_grants
   put '/developer_apps/:id/archive', to: 'developer_apps#archive', as: :archive_developer_app
   put '/developer_apps/:id/unarchive', to: 'developer_apps#unarchive', as: :unarchive_developer_app
+  put '/developer_apps/:developer_app_id/app_invitations/:id/accept', to: 'app_invitations#accept', as: :accept_app_invitation
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

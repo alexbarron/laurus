@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_17_130926) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
   create_table "app_invitations", force: :cascade do |t|
     t.integer "inviter_id"
     t.integer "invitee_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_17_130926) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["developer_app_id", "invitee_email"], name: "index_app_invitations_on_developer_app_id_and_invitee_email", unique: true
   end
 
   create_table "app_memberships", force: :cascade do |t|
@@ -28,6 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_17_130926) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["developer_app_id", "user_id"], name: "index_app_memberships_on_developer_app_id_and_user_id", unique: true
     t.index ["developer_app_id"], name: "index_app_memberships_on_developer_app_id"
     t.index ["user_id"], name: "index_app_memberships_on_user_id"
   end

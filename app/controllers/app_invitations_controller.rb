@@ -1,7 +1,8 @@
 class AppInvitationsController < ApplicationController
-  before_action :set_app_invitation, only: %i[ show edit update destroy ]
-  before_action :set_developer_app, only: %i[ new create ]
+  before_action :set_app_invitation, only: %i[ show edit update destroy accept ]
+  before_action :set_developer_app, only: %i[ new create accept ]
   before_action :authorized_to_invite?, only: %i[ new create ]
+  before_action :correct_user?, only: %i[ accept ]
 
   # GET /app_invitations or /app_invitations.json
   def index
@@ -30,7 +31,7 @@ class AppInvitationsController < ApplicationController
 
     respond_to do |format|
       if @app_invitation.save
-        format.html { redirect_to app_invitation_url(@app_invitation), notice: "App invitation was successfully created." }
+        format.html { redirect_to app_invitations_url, notice: "App invitation was successfully created." }
         format.json { render :show, status: :created, location: @app_invitation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -46,6 +47,18 @@ class AppInvitationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to app_invitations_url, notice: "App invitation was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  # PUT /developer_apps/1/app_invitations/1/accept
+  def accept
+    begin
+      @app_invitation.accept
+      flash[:success] = "App invitation accepted"
+      redirect_to @developer_app
+    rescue
+      flash[:warning] = "App invitation acceptance failed"
+      redirect_to app_invitations_url
     end
   end
 
@@ -70,5 +83,13 @@ class AppInvitationsController < ApplicationController
           flash[:warning] = "Unauthorized request"
           redirect_to @developer_app
       end
-  end
+    end
+
+    def correct_user?
+      unless current_user == @app_invitation.invitee
+        flash[:warning] = "Unauthorized request"
+        redirect_to developer_app_app_invitations_path
+      end
+    end
+
 end
