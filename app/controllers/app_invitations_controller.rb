@@ -1,4 +1,5 @@
 class AppInvitationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_app_invitation, only: %i[ show edit update destroy accept ]
   before_action :set_developer_app, only: %i[ new create accept ]
   before_action :authorized_to_invite?, only: %i[ new create ]
