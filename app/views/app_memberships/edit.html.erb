@@ -1,0 +1,27 @@
+<div class="row center">
+    <div class="col-lg-4"></div>
+
+    <div class="col-lg-4">
+    <h3>Edit App Role</h3>
+        <p>
+            Check the box below if you would like to make <%= @app_membership.user.name %> an Admin on App: <%= @app_membership.developer_app.name %>
+        </p>
+        <p>
+            Admins can edit the developer app and manage members on the team.
+        </p>
+        <%= form_with model: @app_membership do |f| %>
+
+            <%= render 'shared/error_messages', object: f.object %>
+            <div class="input-group" style="margin-bottom: 10px">
+
+                <span class="input-group-addon">
+                    <%= f.check_box :admin %>
+                </span>
+                <%= f.label :admin, "Make App Admin", style: "display: block", class: 'form-control' %>
+            </div>
+
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+
+        <% end %>
+    </div>
+</div>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :developer_apps do
     resources :app_invitations, only: [:new, :create]
   end
+  resources :app_memberships, only: [:edit, :update, :destroy]
 
   get 'static_pages/home'
   get 'developer_apps/:id/manage_grants', to: 'developer_apps#manage_grants', as: :manage_developer_app_grants

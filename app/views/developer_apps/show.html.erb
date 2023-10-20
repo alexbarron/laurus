@@ -46,6 +46,11 @@
         <tr>
             <td><%= app_membership.user.name %></td>
             <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
+            <% if @current_user_membership.admin? && @current_user_membership != app_membership %>
+                <td><%= link_to "Edit", edit_app_membership_path(app_membership), class: 'btn btn-warning' %></td>
+            <% else %>
+                <td></td>
+            <% end %>
         </tr>
     <% end %>
     </table>
