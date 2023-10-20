@@ -12,6 +12,33 @@ feature 'Developer app editing' do
         end
     end
 
+    context "as a logged in unauthorized user" do
+        before :each do
+            @user = create(:user)
+            sign_in(@user)
+        end
+
+        scenario "cannot edit developer app they don't belong to" do
+            visit edit_developer_app_path(@developer_app)
+
+            expect(page).to have_current_path(developer_apps_path)
+            expect(page).to have_content "Unauthorized request"
+        end
+    end
+
+    context "as a logged in non admin team member" do
+        before :each do
+            @user = create(:user)
+            sign_in(@user)
+            @app_membership = @developer_app.app_memberships.create(user_id: @user.id)
+        end
+
+        scenario "cannot edit their developer app" do
+            visit edit_developer_app_path(@developer_app)
+            expect(page).to have_content "Unauthorized request"
+        end
+    end
+
     context "as a logged in admin team member" do
         before :each do
             @user = create(:user)
@@ -34,33 +61,6 @@ feature 'Developer app editing' do
                 expect(page).to have_content "Developer app successfully updated"
                 expect(page).to have_content "#{@user.name} changed name from #{original_name} to #{edited_name}"
             end
-        end
-    end
-
-    context "as a logged in admin team member" do
-        before :each do
-            @user = create(:user)
-            sign_in(@user)
-            @app_membership = @developer_app.app_memberships.create(user_id: @user.id)
-        end
-
-        scenario "cannot edit their developer app" do
-            visit edit_developer_app_path(@developer_app)
-            expect(page).to have_content "Unauthorized request"
-        end
-    end
-
-    context "as a logged in unauthorized user" do
-        before :each do
-            @user = create(:user)
-            sign_in(@user)
-        end
-
-        scenario "cannot edit developer app they don't belong to" do
-            visit edit_developer_app_path(@developer_app)
-
-            expect(page).to have_current_path(developer_apps_path)
-            expect(page).to have_content "Unauthorized request"
         end
     end
 end

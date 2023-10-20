@@ -5,6 +5,7 @@ feature 'App invitation creating' do
         scenario "gets redirected to sign in page" do
             @developer_app = create(:developer_app)
             visit new_developer_app_app_invitation_path(@developer_app)
+            expect(page).to have_current_path(new_user_session_path)
             expect(page).to have_content "You need to sign in or sign up before continuing."
         end
     end
