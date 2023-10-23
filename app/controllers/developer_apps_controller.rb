@@ -38,8 +38,10 @@ class DeveloperAppsController < ApplicationController
         if @developer_app.update(developer_app_params)
             flash[:success] = "Developer app successfully updated"
             redirect_to @developer_app
-        else
+        elsif request.referer == manage_developer_app_grants_url
             render :manage_grants, status: :unprocessable_entity
+        else 
+            render :edit, status: :unprocessable_entity
         end
     end
 
