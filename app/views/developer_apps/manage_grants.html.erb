@@ -5,6 +5,7 @@
     <div class="col-lg-4">
         <%= form_for @developer_app do |f| %>
             <%= render 'shared/error_messages', object: f.object %>
+                <%= hidden_field_tag "developer_app[endpoint_ids][]", nil %>
                 <% @endpoints.each do |endpoint| %>
                     <div class="input-group" style="margin-bottom: 10px">
                         <span class="input-group-addon">
