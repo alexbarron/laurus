@@ -1,14 +1,14 @@
 class AppInvitationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_app_invitation, only: %i[ show edit update destroy accept ]
-  before_action :set_developer_app, only: %i[ new create accept ]
+  before_action :set_app_invitation, only: %i[ show edit update destroy accept decline ]
+  before_action :set_developer_app, only: %i[ new create accept decline ]
   before_action :authorized_to_invite?, only: %i[ new create ]
-  before_action :correct_user?, only: %i[ accept ]
+  before_action :correct_user?, only: %i[ accept decline ]
 
   # GET /app_invitations or /app_invitations.json
   def index
-    @sent_invitations = current_user.sent_invitations
-    @received_invitations = current_user.received_invitations
+    @sent_invitations = current_user.sent_invitations.order("created_at DESC")
+    @received_invitations = current_user.received_invitations.order("created_at DESC")
   end
 
   # GET /app_invitations/1 or /app_invitations/1.json
@@ -60,6 +60,18 @@ class AppInvitationsController < ApplicationController
       redirect_to @developer_app
     rescue
       flash[:warning] = "App invitation acceptance failed"
+      redirect_to app_invitations_path
+    end
+  end
+
+  # GET /developer_apps/1/app_invitations/1/decline
+  def decline
+    begin
+      @app_invitation.decline
+      flash[:success] = "App invitation declined"
+      redirect_to app_invitations_path
+    rescue
+      flash[:warning] = "App invitation declining failed"
       redirect_to app_invitations_path
     end
   end

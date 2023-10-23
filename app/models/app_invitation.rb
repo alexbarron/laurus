@@ -18,6 +18,15 @@ class AppInvitation < ApplicationRecord
         end
     end
 
+    def decline
+        self.status = "declined"
+        self.save
+    end
+
+    def closed
+        ["accepted","declined"].include?(self.status)
+    end
+
     private
 
         def set_status_pending
