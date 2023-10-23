@@ -34,6 +34,7 @@ class AppInvitationsController < ApplicationController
       if @app_invitation.save
         format.html { redirect_to app_invitations_url, notice: "App invitation was successfully created." }
         format.json { render :show, status: :created, location: @app_invitation }
+        AppInvitationMailer.invited(@app_invitation).deliver_later
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @app_invitation.errors, status: :unprocessable_entity }
@@ -51,7 +52,7 @@ class AppInvitationsController < ApplicationController
     end
   end
 
-  # PUT /developer_apps/1/app_invitations/1/accept
+  # GET /developer_apps/1/app_invitations/1/accept
   def accept
     begin
       @app_invitation.accept
@@ -59,7 +60,7 @@ class AppInvitationsController < ApplicationController
       redirect_to @developer_app
     rescue
       flash[:warning] = "App invitation acceptance failed"
-      redirect_to app_invitations_url
+      redirect_to app_invitations_path
     end
   end
 
@@ -89,7 +90,7 @@ class AppInvitationsController < ApplicationController
     def correct_user?
       unless current_user == @app_invitation.invitee
         flash[:warning] = "Unauthorized request"
-        redirect_to developer_app_app_invitations_path
+        redirect_to app_invitations_path
       end
     end
 

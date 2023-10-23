@@ -29,11 +29,8 @@ feature 'App invitation acceptings' do
         end
 
         scenario "can accept app invitation" do
-            visit developer_app_app_invitations_path
+            visit app_invitations_path
             click_on "Accept"
-
-            fill_in "app_invitation_invitee_email", with: @invited_user.email
-            click_on "Submit"
 
             expect(page).to have_content "App invitation accepted"
             expect(page).to have_content @invited_user.name

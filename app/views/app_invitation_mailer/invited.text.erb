@@ -1,0 +1,7 @@
+Hello,
+
+<%= @app_invitation.inviter.name %> has invited you to be <%= @app_invitation.admin? ? "an Admin" : "a read-only" %> team member on developer app <%= @app_invitation.developer_app.name %>.
+
+Follow the link below to accept the invitation.
+
+<%= accept_app_invitation_url(developer_app_id: @app_invitation.developer_app.id, id: @app_invitation.id) %>
