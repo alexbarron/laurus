@@ -61,7 +61,6 @@ feature 'App membership editing' do
             click_on "Submit"
 
             expect(page).to have_current_path(developer_app_path(@developer_app))
-            expect(page).to have_content "App membership successfully updated"
             expect(page).to have_css('td', :exact_text => 'Admin', :visible => true, :count => 2)
 
             click_link 'Edit Role'

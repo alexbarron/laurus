@@ -91,7 +91,6 @@ p {
 
 input, textarea, select, .uneditable-input {
     border: 1px solid #bbb;
-    width: 100%;
     margin-bottom: 15px;
     @include box_sizing;
 }
@@ -113,6 +112,11 @@ input, textarea, select, .uneditable-input {
 
 input {
     height: auto !important;
+}
+
+.button-box {
+    text-align:center;
+    margin-top:20px;
 }
 
 /* developer apps */

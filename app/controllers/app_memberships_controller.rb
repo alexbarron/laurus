@@ -9,7 +9,6 @@ class AppMembershipsController < ApplicationController
 
   def update
     if @app_membership.update(app_membership_params)
-      flash[:success] = "App membership successfully updated"
       redirect_to @app_membership.developer_app
   else
       render :manage_grants, status: :unprocessable_entity

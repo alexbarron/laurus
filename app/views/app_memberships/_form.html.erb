@@ -1,0 +1,22 @@
+<%= turbo_frame_tag("app-members") do %>
+    <strong>Editing <%= @app_membership.user.name %>'s role</strong>
+    <p>
+        Admins can edit the developer app and manage members on the team.
+    </p>
+    <%= form_with model: @app_membership do |f| %>
+
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="input-group" style="margin-bottom: 10px">
+
+            <span class="input-group-addon">
+                <%= f.check_box :admin %>
+            </span>
+            <%= f.label :admin, "Make App Admin", style: "display: block", class: 'form-control' %>
+        </div>
+
+        <div class="button-box">
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+            <%= button_to "Cancel", developer_app_path(@app_membership.developer_app, inline: true), class: 'btn btn-warning' %>
+        </div>
+    <% end %>
+<% end %>

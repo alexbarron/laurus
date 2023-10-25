@@ -43,7 +43,6 @@ feature 'App invitation creating' do
             fill_in "app_invitation_invitee_email", with: @invited_user.email
             click_on "Submit"
 
-            expect(page).to have_content "App invitation was successfully created"
             expect(page).to have_content @invited_user.name
             expect(page).to have_content @invited_user.email
             expect(page).to have_content @inviting_user.name

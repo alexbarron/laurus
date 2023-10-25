@@ -32,7 +32,7 @@ class AppInvitationsController < ApplicationController
 
     respond_to do |format|
       if @app_invitation.save
-        format.html { redirect_to app_invitations_url, notice: "App invitation was successfully created." }
+        format.html { redirect_to @developer_app }
         format.json { render :show, status: :created, location: @app_invitation }
         AppInvitationMailer.invited(@app_invitation).deliver_later
       else

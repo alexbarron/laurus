@@ -13,6 +13,7 @@ class DeveloperAppsController < ApplicationController
     def show
         @app_memberships = @developer_app.app_memberships
         @endpoints = @developer_app.endpoints.ordered_by_path
+        @sent_invitations = @developer_app.app_invitations.where(status: "pending").order("created_at DESC")
     end
 
     def new

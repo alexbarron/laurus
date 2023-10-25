@@ -35,29 +35,43 @@
     <div class="col-lg-6">
     <h4>Team Members</h4>
 
-    <table class="table table-hover">
+    <%= turbo_frame_tag("app-members") do %>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+            <th>User</th>
+            <th>Role</th>
+            </tr>
+            </thead>
+
+            <%= render @app_memberships %>
+        </table>
+
+        <h4>Pending Invitations</h4>
+
+        <table class="table table-hover">
         <thead class="thead-dark">
-        <tr>
-        <th>User</th>
-        <th>Role</th>
-        </tr>
+            <tr>
+            <th>Developer App</th>
+            <th>Invitee</th>
+            <th>Invitee Email</th>
+            <th>Role</th>
+            <th>Invited By</th>
+            <th>Status</th>
+            </tr>
         </thead>
-    <% @app_memberships.each do |app_membership| %>
-        <tr>
-            <td><%= app_membership.user.name %></td>
-            <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
-            <% if current_user.platform_admin? || (@current_user_membership.admin? && @current_user_membership != app_membership) %>
-                <td><%= link_to "Edit Role", edit_app_membership_path(app_membership), class: 'btn btn-warning' %></td>
-            <% else %>
-                <td></td>
-            <% end %>
-        </tr>
+        <% @sent_invitations.each do |app_invitation| %>
+            <%= render app_invitation, invitation_type: "sent" %>
+        <% end %>
+        </table>
+
+        <% if current_user.platform_admin? || @current_user_membership.admin? %>
+            <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'btn btn-primary' %>
+        <% end %>
+        </div>
     <% end %>
-    </table>
-    <% if current_user.platform_admin? || @current_user_membership.admin? %>
-        <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'btn btn-primary' %>
-    <% end %>
-    </div>
+
+
 </div>
 
 <div class="row">

@@ -1,27 +1,30 @@
-<%= form_with(scope: :app_invitation, url: developer_app_app_invitations_path(@developer_app)) do |form| %>
-  <% if app_invitation.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(app_invitation.errors.count, "error") %> prohibited this app_invitation from being saved:</h2>
+<%= turbo_frame_tag("app-members") do %>
+  <%= form_with(scope: :app_invitation, url: developer_app_app_invitations_path(@developer_app)) do |form| %>
+    <% if app_invitation.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(app_invitation.errors.count, "error") %> prohibited this app_invitation from being saved:</h2>
 
-      <ul>
-        <% app_invitation.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% app_invitation.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :invitee_email, style: "display: block" %>
+      <%= form.text_field :invitee_email %>
+    </div>
+
+    <div>
+      <%= form.label :admin, style: "display: block" %>
+      <%= form.check_box :admin %>
+    </div>
+
+    <div class="button-box">
+        <%= form.submit "Submit", class: "btn btn-primary" %>
+        <%= button_to "Cancel", developer_app_path(@developer_app, inline: true), class: 'btn btn-warning' %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :invitee_email, style: "display: block" %>
-    <%= form.text_field :invitee_email %>
-  </div>
-
-  <div>
-    <%= form.label :admin, style: "display: block" %>
-    <%= form.check_box :admin %>
-  </div>
-
-  <div>
-    <%= form.submit "Submit" %>
-  </div>
 <% end %>
