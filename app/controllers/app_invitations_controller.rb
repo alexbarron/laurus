@@ -47,7 +47,7 @@ class AppInvitationsController < ApplicationController
     @app_invitation.destroy
 
     respond_to do |format|
-      format.html { redirect_to app_invitations_url, notice: "App invitation was successfully destroyed." }
+      format.html { redirect_to request.referer, notice: "App invitation was successfully destroyed." }
       format.json { head :no_content }
     end
   end

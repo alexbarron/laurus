@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "app_invitations", force: :cascade do |t|
     t.integer "inviter_id"
     t.integer "invitee_id"
@@ -25,8 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
 
   create_table "app_memberships", force: :cascade do |t|
     t.boolean "admin", default: false
-    t.integer "developer_app_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "developer_app_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["developer_app_id", "user_id"], name: "index_app_memberships_on_developer_app_id_and_user_id", unique: true
@@ -53,8 +56,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
   end
 
   create_table "grants", force: :cascade do |t|
-    t.integer "endpoint_id", null: false
-    t.integer "developer_app_id", null: false
+    t.bigint "endpoint_id", null: false
+    t.bigint "developer_app_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["developer_app_id"], name: "index_grants_on_developer_app_id"
@@ -81,8 +84,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
     t.bigint "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object", limit: 1073741823
-    t.text "object_changes", limit: 1073741823
+    t.text "object"
+    t.text "object_changes"
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
