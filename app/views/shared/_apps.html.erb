@@ -1,0 +1,16 @@
+<h3 class="center">My Apps</h3>
+
+<%= link_to "New App", new_developer_app_path, class: "btn btn-primary" %>
+
+<div class="container">
+<% @developer_apps.each do |developer_app| %>
+    <div class="app-card">
+        <h3><%= developer_app.name %></h3>
+        <div>
+            <span><strong>Client ID:</strong> <%= developer_app.client_id %></span><br />
+            <span><strong>Created:</strong> <%= developer_app.created_at.strftime("%b %d, %Y") %></span><br /><br />
+            <div class="text-center"><%= link_to "Manage", developer_app, class: "btn btn-primary" %></div>
+        </div>
+    </div>
+<% end %>
+</div>

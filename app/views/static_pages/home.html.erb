@@ -1,2 +1,11 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<% if user_signed_in? %>
+    <%= render 'shared/apps' %>
+    <%= will_paginate @developer_apps, params: { controller: :static_pages, action: :home } %>
+<% else %>
+    <div class="center jumbotron">
+    <h1>Welcome to Laurus</h1>
+    <p>Laurus is an open-source developer portal application. Sign up below to try it out.</p>
+
+    <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+    </div>
+<% end %>

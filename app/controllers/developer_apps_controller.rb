@@ -7,7 +7,7 @@ class DeveloperAppsController < ApplicationController
     before_action :platform_admin?, only: [:manage_grants]
 
     def index
-        @developer_apps = current_user.developer_apps.paginate(page: params[:page])
+        @developer_apps = current_user.developer_apps.order("created_at DESC").paginate(page: params[:page])
     end
 
     def show
