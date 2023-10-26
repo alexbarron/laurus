@@ -27,21 +27,24 @@ feature 'App invitation declining' do
         scenario "cannot decline app invitation" do
             @noninvited_user = create(:user, email: "non_invited_user@example.com")
             sign_in(@noninvited_user)
+
             visit decline_app_invitation_path(developer_app_id: @developer_app.id, id: @app_invitation.id)
 
-            expect(page).to have_content "Unauthorized request"
             expect(page).to have_current_path(app_invitations_path)
+            expect(page).to have_content "Unauthorized request"
+            
         end
     end
 
     context "as a logged in invited user" do
         scenario "can decline app invitation" do
             sign_in(@invited_user)
+
             visit app_invitations_path
             click_on "Decline"
 
-            expect(page).to have_content "App invitation declined"
             expect(page).to have_current_path(app_invitations_path)
+            expect(page).to have_content "App invitation declined"
         end
     end
 end

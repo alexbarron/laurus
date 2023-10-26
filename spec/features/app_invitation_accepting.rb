@@ -27,10 +27,11 @@ feature 'App invitation accepting' do
         scenario "cannot accept app invitation" do
             @noninvited_user = create(:user, email: "non_invited_user@example.com")
             sign_in(@noninvited_user)
+
             visit accept_app_invitation_path(developer_app_id: @developer_app.id, id: @app_invitation.id)
 
-            expect(page).to have_content "Unauthorized request"
             expect(page).to have_current_path(app_invitations_path)
+            expect(page).to have_content "Unauthorized request"
         end
     end
 
@@ -40,6 +41,7 @@ feature 'App invitation accepting' do
             visit app_invitations_path
             click_on "Accept"
 
+            expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content "App invitation accepted"
             expect(page).to have_content @invited_user.name
             expect(page).to have_content "Read-only"

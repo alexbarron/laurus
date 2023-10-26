@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 feature 'App invitation creating' do
+    before :each do
+        @developer_app = create(:developer_app)
+        @inviting_user = create(:user)
+    end
+
     context "as a non logged in user" do
         scenario "gets redirected to sign in page" do
-            @developer_app = create(:developer_app)
             visit new_developer_app_app_invitation_path(@developer_app)
+
             expect(page).to have_current_path(new_user_session_path)
             expect(page).to have_content "You need to sign in or sign up before continuing."
         end
@@ -12,17 +17,18 @@ feature 'App invitation creating' do
 
     context "as a logged in non-admin user" do
         before :each do
-            @inviting_user = create(:user)
             sign_in(@inviting_user)
-            @developer_app = create(:developer_app)
             @app_membership = @developer_app.app_memberships.create(user_id: @inviting_user.id, admin: false)
         end
 
         scenario "cannot create a new app invitation" do
             visit developer_app_path(@developer_app)
+
             expect(page).not_to have_content "Add Members"
 
             visit new_developer_app_app_invitation_path(@developer_app)
+
+            expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content "Unauthorized request"
         end
     end
@@ -30,9 +36,7 @@ feature 'App invitation creating' do
     context "as a logged in admin user" do
         before :each do
             @invited_user = create(:user, email: "invited_user@example.com")
-            @inviting_user = create(:user)
             sign_in(@inviting_user)
-            @developer_app = create(:developer_app)
             @app_membership = @developer_app.app_memberships.create(user_id: @inviting_user.id, admin: true)
         end
 
@@ -43,6 +47,7 @@ feature 'App invitation creating' do
             fill_in "app_invitation_invitee_email", with: @invited_user.email
             click_on "Submit"
 
+            expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content @invited_user.name
             expect(page).to have_content @invited_user.email
             expect(page).to have_content @inviting_user.name

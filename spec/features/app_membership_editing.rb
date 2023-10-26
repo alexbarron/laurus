@@ -12,6 +12,7 @@ feature 'App membership editing' do
     context "as a non logged in user" do
         scenario "gets redirected to sign in page" do
             visit edit_app_membership_path(@nonadmin_app_membership)
+
             expect(page).to have_current_path(new_user_session_path)
             expect(page).to have_content "You need to sign in or sign up before continuing."
         end
@@ -25,6 +26,7 @@ feature 'App membership editing' do
 
         scenario "cannot edit developer app they don't belong to" do
             visit edit_app_membership_path(@nonadmin_app_membership)
+
             expect(page).to have_current_path(developer_apps_path)
             expect(page).to have_content "Unauthorized request"
         end
@@ -37,11 +39,13 @@ feature 'App membership editing' do
 
         scenario "cannot see Edit Role button" do
             visit developer_app_path(@developer_app)
+
             expect(page).not_to have_content "Edit Role"
         end
 
         scenario "cannot edit another team member's role thru direct navigation" do
             visit edit_app_membership_path(@admin_app_membership)
+
             expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content "Unauthorized request"
         end
@@ -70,6 +74,4 @@ feature 'App membership editing' do
             expect(page).to have_css('td', :exact_text => 'Admin', :visible => true, :count => 1)
         end
     end
-
-
 end
