@@ -7,7 +7,7 @@ class AppInvitation < ApplicationRecord
 
     validates :invitee_email, 
         presence: true,
-        length: { maximum: 255, minimum: 3 },
+        length: { maximum: 50, minimum: 3 },
         format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
         uniqueness: { scope: :developer_app_id, message: "has already been invited to this developer app" }
 
