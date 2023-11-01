@@ -2,6 +2,16 @@ Hello,
 
 <%= @app_invitation.inviter.name %> has invited you to be <%= @app_invitation.admin? ? "an Admin" : "a read-only" %> team member on developer app <%= @app_invitation.developer_app.name %>.
 
-Follow the link below to accept the invitation.
+<% if @app_invitation.invitee_id.nil? %>
+
+Looks like you don't have an account on Laurus yet. Please follow the link below to sign up first.
+
+<%= new_user_registration_url %>
+
+Once you've successfully signed up, you can proceed with accepting the invitation.
+
+<% end %>
+
+You can accept the invitation from the 'App Invitations' page or by following the link below.
 
 <%= accept_app_invitation_url(developer_app_id: @app_invitation.developer_app.id, id: @app_invitation.id) %>

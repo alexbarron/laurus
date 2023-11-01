@@ -11,9 +11,17 @@ class User < ApplicationRecord
     length: { maximum: 255, minimum: 3 },
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
     uniqueness: true
+
+  after_create :associate_app_invitations
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  
+  private
+
+    def associate_app_invitations
+      AppInvitation.where(invitee_email: self.email).update_all(invitee_id: self.id)
+    end
 end

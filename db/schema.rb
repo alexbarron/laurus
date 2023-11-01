@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_01_111540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_112529) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["developer_app_id", "invitee_email"], name: "index_app_invitations_on_developer_app_id_and_invitee_email", unique: true
+    t.index ["invitee_email"], name: "index_app_invitations_on_invitee_email"
   end
 
   create_table "app_memberships", force: :cascade do |t|
