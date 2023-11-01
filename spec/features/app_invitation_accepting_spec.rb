@@ -35,7 +35,7 @@ feature 'App invitation accepting' do
         end
     end
 
-    context "as a logged in invited user" do
+    context "as a logged in invited already created user" do
         scenario "can accept app invitation" do
             sign_in(@invited_user)
             visit app_invitations_path
@@ -45,6 +45,32 @@ feature 'App invitation accepting' do
             expect(page).to have_content "App invitation accepted"
             expect(page).to have_content @invited_user.name
             expect(page).to have_content "Read-only"
+        end
+    end
+
+    context "as a non-created invited user" do
+        scenario "can create account and automatically accept app invitation" do
+            @app_invitation2 = @developer_app.app_invitations.create(
+                invitee_email: 'uncreateduser@example.com',
+                invitee_id: nil,
+                inviter_id: @inviting_user.id,
+                admin: false
+            )
+
+            visit accept_app_invitation_path(developer_app_id: @developer_app.id, id: @app_invitation2.id)
+
+            expect(page).to have_current_path(new_user_session_path)
+            expect(page).to have_content "You need to sign in or sign up before continuing."
+
+            click_on 'Sign up'
+            fill_in 'user_name', with: 'Uncreated User'
+            fill_in 'user_email', with: @app_invitation2.invitee_email
+            fill_in 'user_password', with: "password"
+            fill_in 'user_password_confirmation', with: "password"
+            click_on 'Sign up'
+
+            expect(page).to have_current_path(developer_app_path(@developer_app))
+            expect(page).to have_content("App invitation accepted")
         end
     end
 end
