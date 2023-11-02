@@ -18,7 +18,6 @@ To Do List:
 * Portal for developers to request access to restricted APIs.
 * Admin portal to manage developer requests and grant/deny acccess.
 * Payment integration into tools like Stripe to manage paid APIs.
-* Create custom user roles and permissions.
 * Manage OAuth scopes for APIs secured with OAuth.
 * Automate creation/updating of endpoint objects in the app by parsing OpenAPI specs.
 * Customization of client ID format.

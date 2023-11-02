@@ -1,3 +1,13 @@
 <h3 class="center">New Endpoint</h3>
 
 <%= render 'form' %>
+
+<h3 class="center">Import OpenAPI Spec</h3>
+You can automatically create endpoints for all paths in an OpenAPI definition by uploading your OpenAPI spec file.
+
+<%= form_with url: endpoints_import_path do |f| %>
+    <span class="openapi_sec">
+        <%= f.file_field :openapi_spec %>
+    </span>
+    <%= f.submit "Import", class: "btn btn-primary" %>
+<% end %>

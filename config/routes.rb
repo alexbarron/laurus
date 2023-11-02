@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   put '/developer_apps/:id/unarchive', to: 'developer_apps#unarchive', as: :unarchive_developer_app
   get '/developer_apps/:developer_app_id/app_invitations/:id/accept', to: 'app_invitations#accept', as: :accept_app_invitation
   get '/developer_apps/:developer_app_id/app_invitations/:id/decline', to: 'app_invitations#decline', as: :decline_app_invitation
+  post 'endpoints/import', to: 'endpoints#import'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
