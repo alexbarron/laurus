@@ -26,9 +26,11 @@ module DeveloperAppsHelper
         def process_app_membership_activity(version, user)
             affected_user = AppMembership.find(version.item_id).user
             result = "<li>#{version.created_at.strftime("%d %b %Y at %H:%M")}: #{user.name} "
-            if version.event == "update"
+            if version.event == "update" && !!version.changeset[:admin]
                 new_role = version.changeset[:admin][1] ? "Admin" : "Read-only"
                 result += "changed #{affected_user.name}'s role to #{new_role}</li>"
+            elsif version.event == "update" && !!version.changeset[:deleted_at]
+                result += "removed #{affected_user.name}</li>"
             end
             return result.html_safe
         end

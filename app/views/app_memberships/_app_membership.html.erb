@@ -3,6 +3,7 @@
             <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
             <% if current_user.platform_admin? || (@current_user_membership.admin? && @current_user_membership != app_membership) %>
                 <td><%= link_to "Edit Role", edit_app_membership_path(app_membership), class: 'btn btn-warning' %></td>
+                <td><%= link_to "Remove", app_membership_path(app_membership), class: 'btn btn-danger', data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %></td>
             <% else %>
                 <td></td>
             <% end %>
