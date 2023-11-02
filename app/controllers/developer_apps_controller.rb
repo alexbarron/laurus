@@ -13,6 +13,7 @@ class DeveloperAppsController < ApplicationController
     def show
         @app_memberships = @developer_app.app_memberships
         @endpoints = @developer_app.endpoints.ordered_by_path
+        @activities = build_activity_log
         @sent_invitations = @developer_app.app_invitations.where(status: "pending").order("created_at DESC")
     end
 
@@ -70,5 +71,13 @@ class DeveloperAppsController < ApplicationController
 
         def set_developer_app
             @developer_app = DeveloperApp.find(params[:id])
+        end
+
+        def build_activity_log
+            versions = @developer_app.versions.to_a
+            @app_memberships.each do |app_membership|
+                versions << app_membership.versions
+            end
+            return versions.to_a.flatten!.sort_by { |v| v[:created_at] }.reverse
         end
 end
