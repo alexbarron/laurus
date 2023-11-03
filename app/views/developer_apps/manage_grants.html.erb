@@ -1,20 +1,23 @@
-<h3 class="center">Managing Grants For: <%= @developer_app.name %></h3>
+<%= turbo_frame_tag("developer-app-show") do %>
+    <%= render 'app_details' %>
+    <h3 class="center">Managing Grants For: <%= @developer_app.name %></h3>
 
-<div class="row center">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
-        <%= form_for @developer_app do |f| %>
-            <%= render 'shared/error_messages', object: f.object %>
-                <%= hidden_field_tag "developer_app[endpoint_ids][]", nil %>
-                <% @endpoints.each do |endpoint| %>
-                    <div class="input-group" style="margin-bottom: 10px">
-                        <span class="input-group-addon">
-                            <%= check_box_tag "developer_app[endpoint_ids][]", endpoint.id, f.object.endpoints.include?(endpoint) %>
-                        </span>
-                        <%= label_tag :endpoint_id, "#{endpoint.method} #{endpoint.path}", class: 'form-control' %>
-                    </div>
-                <% end %>
-            <%= f.submit "Set Grants", class: "btn btn-primary" %>
-        <% end %>
+    <div class="row center">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <%= form_for @developer_app do |f| %>
+                <%= render 'shared/error_messages', object: f.object %>
+                    <%= hidden_field_tag "developer_app[endpoint_ids][]", nil %>
+                    <% @endpoints.each do |endpoint| %>
+                        <div class="input-group" style="margin-bottom: 10px">
+                            <span class="input-group-addon">
+                                <%= check_box_tag "developer_app[endpoint_ids][]", endpoint.id, f.object.endpoints.include?(endpoint) %>
+                            </span>
+                            <%= label_tag :endpoint_id, "#{endpoint.method} #{endpoint.path}", class: 'form-control' %>
+                        </div>
+                    <% end %>
+                <%= f.submit "Set Grants", class: "btn btn-primary" %>
+            <% end %>
+        </div>
     </div>
-</div>
+<% end %>

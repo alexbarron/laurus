@@ -1,0 +1,9 @@
+<%= turbo_frame_tag("developer-app-show") do %>
+    <%= render 'app_details' %>
+    <h3 class="center">Activity Log</h3>
+        <ul>
+            <% @activities.each do |version| %>
+                <%= render_activity(version) %>
+            <% end %>
+        </ul>
+<% end %>

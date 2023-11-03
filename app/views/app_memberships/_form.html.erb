@@ -1,22 +1,16 @@
-<%= turbo_frame_tag("app-members") do %>
-    <strong>Editing <%= @app_membership.user.name %>'s role</strong>
-    <p>
-        Admins can edit the developer app and manage members on the team.
-    </p>
-    <%= form_with model: @app_membership do |f| %>
+<%= form_with scope: @app_membership, url: developer_app_app_membership_path(developer_app_id: @developer_app.id, id: @app_membership.id), method: :put do |f| %>
 
-        <%= render 'shared/error_messages', object: f.object %>
-        <div class="input-group" style="margin-bottom: 10px">
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="input-group" style="margin-bottom: 10px">
 
-            <span class="input-group-addon">
-                <%= f.check_box :admin %>
-            </span>
-            <%= f.label :admin, "Make App Admin", style: "display: block", class: 'form-control' %>
-        </div>
+        <span class="input-group-addon">
+            <%= f.check_box :admin %>
+        </span>
+        <%= f.label :admin, "Make App Admin", style: "display: block", class: 'form-control' %>
+    </div>
 
-        <div class="button-box">
-            <%= f.submit "Submit", class: "btn btn-primary" %>
-            <%= button_to "Cancel", developer_app_path(@app_membership.developer_app, inline: true), class: 'btn btn-warning' %>
-        </div>
-    <% end %>
+    <div class="button-box">
+        <%= f.submit "Submit", class: "btn btn-primary" %>
+        <%= button_to "Cancel", developer_app_path(@app_membership.developer_app, inline: true), class: 'btn btn-warning' %>
+    </div>
 <% end %>

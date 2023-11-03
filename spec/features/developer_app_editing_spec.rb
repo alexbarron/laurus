@@ -53,12 +53,14 @@ feature 'Developer app editing' do
 
                 visit developer_apps_path
                 click_link 'Manage', match: :first
+                click_link 'Settings'
                 click_link 'Edit App'
                 fill_in "developer_app_name", with: edited_name
                 click_on "Submit"
 
                 expect(page).to have_current_path(developer_app_path(@developer_app))
                 expect(page).to have_content "Developer app successfully updated"
+                click_link 'Activity'
                 expect(page).to have_content "#{@user.name} changed name from #{original_name} to #{edited_name}"
             end
         end

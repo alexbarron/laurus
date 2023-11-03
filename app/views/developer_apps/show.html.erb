@@ -1,43 +1,18 @@
-<h3><%= @developer_app.name %></h3>
-<span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
-<span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
-<span><strong>Status: </strong><%= @developer_app.archived_at? ? "Archived" : "Active" %>
 
-<% if @current_user.platform_admin? || @current_user_membership.admin? %>
-    <%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "btn btn-primary" %>
-<% end %>
-
-<div class="row">
-    <div class="col-lg-6">
-        <h4>Grants</h4>
-        <%= render 'grants' %>
-    </div>
-    <div class="col-lg-6">
-        <h4>Team Members</h4>
-        <%= render 'team_members' %>
-    </div>
+<div class="container">
+    <nav>
+        <ul class="nav navbar-nav navbar-left">
+            <li><%= link_to "Overview", @developer_app %></li>
+            <li><%= link_to "Activity", developer_app_activity_path(@developer_app), data: { "turbo-frame": "developer-app-show"} %></li>
+            <li><%= link_to "Team Members", developer_app_app_memberships_path(developer_app_id: @developer_app.id), data: { "turbo-frame": "developer-app-show"} %></li>
+            <li><%= link_to "Settings", developer_app_settings_path(@developer_app), data: { "turbo-frame": "developer-app-show"} %></li>
+        </ul>
+    </nav>
 </div>
 
-<div class="row">
-    <div class="col-lg-6">
-        <h4>Activity Log</h4>
-        <ul>
-            <% @activities.each do |version| %>
-                <%= render_activity(version) %>
-            <% end %>
-        </ul>
-    </div>
-    
-    <div class="col-lg-6">
-        <% if @current_user.platform_admin? || @current_user_membership.admin? %>
-            <h4>Danger Zone</h4>
-            <div>
-            <% if @developer_app.archived_at? %>
-                <%= link_to "Unarchive", unarchive_developer_app_path(@developer_app), class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
-            <% else %>
-                <%= link_to "Archive", archive_developer_app_path(@developer_app), class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
-            <% end %>
-            </div>
-        <% end %>
-    </div>
+<div class="container">
+    <%= turbo_frame_tag("developer-app-show") do %>
+        <%= render 'app_details' %>
+        <%= render 'grants' %>
+    <% end %>
 </div>

@@ -34,17 +34,15 @@ feature 'Managing API grants' do
 
     context "as a logged in platform admin user" do
         before :each do
-            @admin_user = create(:user, platform_admin: true)
+            @platform_admin_user = create(:user, platform_admin: true)
             @endpoint = create(:endpoint)
-            sign_in(@admin_user)
+            sign_in(@platform_admin_user)
         end
 
         scenario "can manage grants for their own app" do
-            @app_membership = @developer_app.app_memberships.create(user_id: @admin_user.id)
+            @app_membership = @developer_app.app_memberships.create(user_id: @platform_admin_user.id)
 
             visit developer_app_path(@developer_app)
-            expect(page).to have_content(@admin_user.name, count: 2)
-            page.html.should include("<td>#{@admin_user.name}</td>")
 
             click_on 'Manage Grants'
             check
@@ -66,7 +64,6 @@ feature 'Managing API grants' do
             @app_membership = @developer_app.app_memberships.create(user_id: @second_user.id)
 
             visit developer_app_path(@developer_app)
-            page.html.should_not include("<td>#{@admin_user.name}</td>")
 
             click_on 'Manage Grants'
             check

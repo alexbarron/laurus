@@ -1,26 +1,32 @@
 class AppMembershipsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_app_membership
-  before_action :cannot_modify_own_membership
-  before_action -> { set_current_user_membership(@app_membership.developer_app) }
-  before_action -> { authorized_to_edit_app?(@app_membership.developer_app) }, 
+  before_action :set_app_membership, except: [:index]
+  before_action :set_developer_app
+  before_action :cannot_modify_own_membership, except: [:index]
+  before_action -> { set_current_user_membership(@developer_app) }
+  before_action -> { authorized_to_edit_app?(@developer_app) }, except: [:index]
+
+  def index
+    @app_memberships = @developer_app.app_memberships.kept
+    @sent_invitations = @developer_app.app_invitations.where(status: "pending").order("created_at DESC")
+  end
 
   def edit
   end
 
   def update
     if @app_membership.update(app_membership_params)
-      redirect_to @app_membership.developer_app
-  else
+      redirect_to developer_app_app_memberships_path(developer_app_id: @app_membership.developer_app.id)
+    else
       render :manage_grants, status: :unprocessable_entity
-  end
+    end
   end
 
   def destroy
     @app_membership.discard
 
     respond_to do |format|
-      format.html { redirect_to @app_membership.developer_app, notice: "#{@app_membership.user.name} was removed from the app." }
+      format.html { redirect_to developer_app_app_memberships_path(developer_app_id: @app_membership.developer_app.id), notice: "#{@app_membership.user.name} was removed from the app." }
       format.json { head :no_content }
     end
   end

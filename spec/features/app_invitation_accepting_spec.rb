@@ -43,6 +43,8 @@ feature 'App invitation accepting' do
 
             expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content "App invitation accepted"
+
+            click_link "Team Members"
             expect(page).to have_content @invited_user.name
             expect(page).to have_content "Read-only"
         end

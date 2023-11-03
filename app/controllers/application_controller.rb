@@ -35,4 +35,8 @@ class ApplicationController < ActionController::Base
                 redirect_to developer_app
             end
         end
+
+        def set_developer_app
+          @developer_app = DeveloperApp.find(params[:developer_app_id])
+        end
 end

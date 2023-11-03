@@ -32,7 +32,7 @@ class AppInvitationsController < ApplicationController
 
     respond_to do |format|
       if @app_invitation.save
-        format.html { redirect_to @developer_app }
+        format.html { redirect_to developer_app_app_memberships_path(developer_app_id: @developer_app.id) }
         format.json { render :show, status: :created, location: @app_invitation }
         AppInvitationMailer.invited(@app_invitation).deliver_later
       else
@@ -44,10 +44,11 @@ class AppInvitationsController < ApplicationController
 
   # DELETE /app_invitations/1 or /app_invitations/1.json
   def destroy
+    @developer_app = @app_invitation.developer_app
     @app_invitation.destroy
 
     respond_to do |format|
-      format.html { redirect_to request.referer, notice: "App invitation was successfully destroyed." }
+      format.html { redirect_to developer_app_app_memberships_path(developer_app_id: @developer_app.id), notice: "App invitation was successfully destroyed." }
       format.json { head :no_content }
     end
   end

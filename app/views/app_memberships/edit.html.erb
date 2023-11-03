@@ -1,1 +1,10 @@
-<%= render 'form' %>
+<%= turbo_frame_tag("developer-app-show") do %>
+    <%= render 'developer_apps/app_details' %>
+    <%= turbo_frame_tag("app-members") do %>
+    <strong>Editing <%= @app_membership.user.name %>'s role</strong>
+    <p>
+        Admins can edit the developer app and manage members on the team.
+    </p>
+    <%= render 'form' %>
+    <% end %>
+<% end %>

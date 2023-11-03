@@ -23,6 +23,7 @@ feature 'App invitation creating' do
 
         scenario "cannot create a new app invitation" do
             visit developer_app_path(@developer_app)
+            click_link "Team Members"
 
             expect(page).not_to have_content "Add Members"
 
@@ -42,12 +43,12 @@ feature 'App invitation creating' do
 
         scenario "can create a new app invitation" do
             visit developer_app_path(@developer_app)
+            click_link "Team Members"
             click_on "Add Members"
 
             fill_in "app_invitation_invitee_email", with: @invited_user.email
             click_on "Submit"
 
-            expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content @invited_user.name
             expect(page).to have_content @invited_user.email
             expect(page).to have_content @inviting_user.name
@@ -63,6 +64,7 @@ feature 'App invitation creating' do
             )
 
             visit developer_app_path(@developer_app)
+            click_link "Team Members"
             click_on "Add Members"
 
             fill_in "app_invitation_invitee_email", with: @invited_user.email

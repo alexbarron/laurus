@@ -11,7 +11,7 @@ feature 'App membership editing' do
 
     context "as a non logged in user" do
         scenario "gets redirected to sign in page" do
-            visit edit_app_membership_path(@nonadmin_app_membership)
+            visit edit_developer_app_app_membership_path(@admin_app_membership, developer_app_id: @developer_app.id)
 
             expect(page).to have_current_path(new_user_session_path)
             expect(page).to have_content "You need to sign in or sign up before continuing."
@@ -25,7 +25,7 @@ feature 'App membership editing' do
         end
 
         scenario "cannot edit developer app they don't belong to" do
-            visit edit_app_membership_path(@nonadmin_app_membership)
+            visit edit_developer_app_app_membership_path(@admin_app_membership, developer_app_id: @developer_app.id)
 
             expect(page).to have_current_path(developer_apps_path)
             expect(page).to have_content "Unauthorized request"
@@ -39,12 +39,13 @@ feature 'App membership editing' do
 
         scenario "cannot see Edit Role button" do
             visit developer_app_path(@developer_app)
+            click_link 'Team Members'
 
             expect(page).not_to have_content "Edit Role"
         end
 
         scenario "cannot edit another team member's role thru direct navigation" do
-            visit edit_app_membership_path(@admin_app_membership)
+            visit edit_developer_app_app_membership_path(@admin_app_membership, developer_app_id: @developer_app.id)
 
             expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_content "Unauthorized request"
@@ -58,13 +59,14 @@ feature 'App membership editing' do
 
         scenario "can edit another team member's role" do
             visit developer_app_path(@developer_app)
+            click_link 'Team Members'
+
             expect(page).to have_css('td', :exact_text => 'Admin', :visible => true, :count => 1)
 
             click_link 'Edit Role'
             check
             click_on "Submit"
 
-            expect(page).to have_current_path(developer_app_path(@developer_app))
             expect(page).to have_css('td', :exact_text => 'Admin', :visible => true, :count => 2)
 
             click_link 'Edit Role'

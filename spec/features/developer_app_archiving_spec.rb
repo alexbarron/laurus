@@ -51,6 +51,7 @@ feature 'Developer app archiving' do
 
                 with_versioning do 
                     visit developer_app_path(@developer_app)
+                    click_link 'Settings'
                     click_on 'Archive'
     
                     expect(page).to have_content "Developer app archived"

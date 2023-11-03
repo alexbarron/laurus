@@ -1,2 +1,5 @@
-<h3 class="center">Edit App</h3>
-<%= render 'form' %>
+<%= turbo_frame_tag("developer-app-show") do %>
+    <%= render 'app_details' %>
+    <h3 class="center">Edit App</h3>
+    <%= render 'form' %>
+<% end %>

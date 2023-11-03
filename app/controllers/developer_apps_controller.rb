@@ -1,7 +1,7 @@
 class DeveloperAppsController < ApplicationController
-    before_action :set_developer_app, only: [:show, :edit, :update, :manage_grants, :archive, :unarchive]
+    before_action :set_developer_app, except: [:index, :new, :create]
     before_action :authenticate_user!
-    before_action -> { set_current_user_membership(@developer_app) }, only: [:show, :edit, :update, :archive, :unarchive]
+    before_action -> { set_current_user_membership(@developer_app) }, only: [:show, :edit, :update, :archive, :unarchive, :settings]
     before_action -> { authorized_to_view_app?(@developer_app) }, only: [:show]
     before_action -> { authorized_to_edit_app?(@developer_app) }, only: [:edit, :update, :archive, :unarchive]
     before_action :platform_admin?, only: [:manage_grants]
@@ -11,10 +11,21 @@ class DeveloperAppsController < ApplicationController
     end
 
     def show
-        @app_memberships = @developer_app.app_memberships
         @endpoints = @developer_app.endpoints.ordered_by_path
+    end
+
+    def activity
+        @app_memberships = @developer_app.app_memberships
         @activities = build_activity_log
-        @sent_invitations = @developer_app.app_invitations.where(status: "pending").order("created_at DESC")
+        respond_to do |format|
+            format.html
+        end
+    end
+
+    def settings
+        respond_to do |format|
+            format.html
+        end
     end
 
     def new
@@ -54,13 +65,13 @@ class DeveloperAppsController < ApplicationController
     def archive
         @developer_app.archive
         flash[:success] = "Developer app archived"
-        redirect_to @developer_app, status: :see_other
+        redirect_to developer_app_settings_path(@developer_app)
     end
 
     def unarchive
         @developer_app.unarchive
         flash[:success] = "Developer app reactivated"
-        redirect_to @developer_app
+        redirect_to developer_app_settings_path(@developer_app)
     end
 
     private
