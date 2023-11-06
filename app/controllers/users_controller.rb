@@ -6,5 +6,4 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @app_memberships = @user.app_memberships.paginate(page: params[:page])
   end
-
 end

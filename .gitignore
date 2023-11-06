@@ -34,5 +34,8 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore rubocop config
+.rubocop.yml
+
 # Ignore notes
 notes.txt

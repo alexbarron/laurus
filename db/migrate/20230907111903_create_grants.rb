@@ -7,6 +7,6 @@ class CreateGrants < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :grants, [:endpoint_id, :developer_app_id], unique: true
+    add_index :grants, %i[endpoint_id developer_app_id], unique: true
   end
 end
