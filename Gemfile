@@ -51,6 +51,8 @@ gem "bootstrap-will_paginate", "1.0.0"
 gem "paper_trail", "15.0.0"
 gem "discard", "~> 1.2"
 gem "openapi_parser"
+gem "omniauth", "~> 1.9.1"
+gem "omniauth-linkedin-oauth2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

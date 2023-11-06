@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :app_invitations, only: [:index, :show, :destroy]
   devise_for :users, :controllers => {
-    registrations: 'registrations'
+    registrations: 'registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
   
   resources :endpoints
