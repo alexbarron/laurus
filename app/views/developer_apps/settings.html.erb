@@ -1,16 +1,15 @@
-<%= turbo_frame_tag("developer-app-show") do %>
-    <%= render 'app_details' %>
-    <h3 class="center">Settings</h3>
-    <% if @current_user.platform_admin? || @current_user_membership.admin? %>
-        <%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "btn btn-primary" %>
-        
-        <h4>Danger Zone</h4>
-        <div>
-        <% if @developer_app.archived_at? %>
-            <%= link_to "Unarchive", unarchive_developer_app_path(@developer_app), class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
-        <% else %>
-            <%= link_to "Archive", archive_developer_app_path(@developer_app), class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
-        <% end %>
-        </div>
+<%= render 'app_header' %>
+
+<h3 class="center">Settings</h3>
+<% if @current_user.platform_admin? || (@current_user_membership.active_admin? ) %>
+    <%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "btn btn-primary" %>
+    
+    <h4>Danger Zone</h4>
+    <div>
+    <% if @developer_app.archived_at? %>
+        <%= link_to "Unarchive", unarchive_developer_app_path(@developer_app), class: 'btn btn-warning', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
+    <% else %>
+        <%= link_to "Archive", archive_developer_app_path(@developer_app), class: 'btn btn-danger', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %>
     <% end %>
+    </div>
 <% end %>

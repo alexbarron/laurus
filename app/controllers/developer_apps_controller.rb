@@ -64,6 +64,7 @@ class DeveloperAppsController < ApplicationController
   end
 
   def archive
+    
     @developer_app.archive
     flash[:success] = 'Developer app archived'
     redirect_to developer_app_settings_path(@developer_app)

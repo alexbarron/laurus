@@ -6,4 +6,8 @@ class AppMembership < ApplicationRecord
   has_paper_trail skip: %i[id created_at updated_at developer_app_id]
 
   validates :user_id, uniqueness: { scope: :developer_app_id }
+
+  def active_admin?
+    self.admin? && self.kept?
+  end
 end

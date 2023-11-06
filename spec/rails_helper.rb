@@ -62,9 +62,11 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.include FactoryBot::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods, type: :feature
+  config.include FactoryBot::Syntax::Methods, type: :request
 
   config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Devise::Test::IntegrationHelpers, type: :request
 
   Capybara.javascript_driver = :webkit
 end

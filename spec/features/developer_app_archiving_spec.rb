@@ -6,34 +6,9 @@ feature 'Developer app archiving' do
     @user = create(:user)
   end
 
-  context 'as a non-logged in user' do
-    scenario 'gets redirected to sign in page' do
-      skip # How to test this in a feature spec when archive method is a PUT method
-      visit archive_developer_app_path(@developer_app)
-
-      expect(page).to have_current_path(new_user_session_path)
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
-    end
-  end
-
   context 'as a logged in user' do
     before :each do
       sign_in(@user)
-    end
-
-    context 'not a team member' do
-      scenario 'cannot archive/unarchive developer app' do
-        skip
-        visit archive_developer_app_path(@developer_app)
-
-        expect(page).to have_current_path(developer_app_path(@developer_app))
-        expect(page).to have_content 'Unauthorized request'
-
-        visit unarchive_developer_app_path(@developer_app)
-        expect(page).to have_current_path(developer_app_path(@developer_app))
-
-        expect(page).to have_content 'Unauthorized request'
-      end
     end
 
     context 'with read-only membership' do

@@ -23,17 +23,17 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized_to_view_app?(_developer_app)
-    return if current_user.platform_admin? || !!@current_user_membership
+    return if current_user.platform_admin? || (!!@current_user_membership && @current_user_membership.kept?)
 
     flash[:warning] = 'Unauthorized request'
     redirect_to(developer_apps_path, status: :see_other)
   end
 
   def authorized_to_edit_app?(developer_app)
-    return if current_user.platform_admin? || (!!@current_user_membership && !!@current_user_membership.admin?)
+    return if current_user.platform_admin? || (!!@current_user_membership && @current_user_membership.admin? && @current_user_membership.kept?)
 
     flash[:warning] = 'Unauthorized request'
-    redirect_to developer_app
+    redirect_to developer_app, status: :see_other
   end
 
   def set_developer_app

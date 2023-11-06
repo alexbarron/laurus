@@ -1,18 +1,2 @@
-
-<div class="container">
-    <nav>
-        <ul class="nav navbar-nav navbar-left">
-            <li><%= link_to "Overview", @developer_app %></li>
-            <li><%= link_to "Activity", developer_app_activity_path(@developer_app), data: { "turbo-frame": "developer-app-show"} %></li>
-            <li><%= link_to "Team Members", developer_app_app_memberships_path(developer_app_id: @developer_app.id), data: { "turbo-frame": "developer-app-show"} %></li>
-            <li><%= link_to "Settings", developer_app_settings_path(@developer_app), data: { "turbo-frame": "developer-app-show"} %></li>
-        </ul>
-    </nav>
-</div>
-
-<div class="container">
-    <%= turbo_frame_tag("developer-app-show") do %>
-        <%= render 'app_details' %>
-        <%= render 'grants' %>
-    <% end %>
-</div>
+<%= render 'app_header' %>
+<%= render 'grants' %>

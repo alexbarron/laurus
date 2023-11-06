@@ -1,0 +1,15 @@
+<div class="container">
+    <nav>
+        <ul class="nav navbar-nav navbar-left">
+            <li><%= link_to "Overview", @developer_app %></li>
+            <li><%= link_to "Activity", developer_app_activity_path(@developer_app) %></li>
+            <li><%= link_to "Team Members", developer_app_app_memberships_path(developer_app_id: @developer_app.id) %></li>
+            <li><%= link_to "Settings", developer_app_settings_path(@developer_app) %></li>
+        </ul>
+    </nav>
+</div>
+
+<h3><%= @developer_app.name %></h3>
+<span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
+<span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
+<span><strong>Status: </strong><%= @developer_app.archived_at? ? "Archived" : "Active" %>

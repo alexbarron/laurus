@@ -1,5 +1,5 @@
-<%= turbo_frame_tag("developer-app-show") do %>
-    <%= render 'app_details' %>
+
+    <%= render 'app_header' %>
     <h3 class="center">Managing Grants For: <%= @developer_app.name %></h3>
 
     <div class="row center">
@@ -20,4 +20,3 @@
             <% end %>
         </div>
     </div>
-<% end %>
