@@ -3,12 +3,12 @@ class AppMembershipsController < ApplicationController
   before_action :set_app_membership, except: [:index]
   before_action :set_developer_app
   before_action :cannot_modify_own_membership, except: [:index]
-  before_action -> { set_current_user_membership(@developer_app) }
+  before_action -> { find_current_user_membership(@developer_app) }
   before_action -> { authorized_to_edit_app?(@developer_app) }, except: [:index]
 
   def index
     @app_memberships = @developer_app.app_memberships.kept
-    @sent_invitations = @developer_app.app_invitations.where(status: 'pending').order('created_at DESC')
+    @sent_invitations = @developer_app.app_invitations.where(status: "pending").order("created_at DESC")
   end
 
   def edit; end
@@ -47,7 +47,7 @@ class AppMembershipsController < ApplicationController
     # Unless user is a platform admin
     return unless @app_membership.user == current_user && !current_user.platform_admin?
 
-    flash[:warning] = 'You cannot modify your own app membership.'
+    flash[:warning] = "You cannot modify your own app membership."
     redirect_to @app_membership.developer_app
   end
 end

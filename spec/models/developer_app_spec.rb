@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DeveloperApp do
-  it 'has a name' do
-    developer_app = DeveloperApp.create!(name: 'Best Developer App')
-    expect(developer_app.name).to eq('Best Developer App')
+  it "has a name" do
+    developer_app = DeveloperApp.create!(name: "Best Developer App")
+    expect(developer_app.name).to eq("Best Developer App")
   end
 end

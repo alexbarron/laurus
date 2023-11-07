@@ -17,7 +17,7 @@ class EndpointsController < ApplicationController
     @endpoint = Endpoint.new(endpoint_params)
 
     if @endpoint.save
-      flash[:success] = 'Endpoint successfully created'
+      flash[:success] = "Endpoint successfully created"
       redirect_to @endpoint
     else
       render :new, status: :unprocessable_entity
@@ -28,7 +28,7 @@ class EndpointsController < ApplicationController
 
   def update
     if @endpoint.update(endpoint_params)
-      flash[:success] = 'Endpoint successfully updated'
+      flash[:success] = "Endpoint successfully updated"
       redirect_to @endpoint
     else
       render :edit, status: :unprocessable_entity
@@ -37,7 +37,7 @@ class EndpointsController < ApplicationController
 
   def import
     if Endpoint.import_openapi_spec(params[:openapi_spec])
-      redirect_to endpoints_path, notice: 'Successfully imported endpoints'
+      redirect_to endpoints_path, notice: "Successfully imported endpoints"
     else
       render :new, status: :unprocessable_entity
     end

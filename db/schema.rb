@@ -12,95 +12,95 @@
 
 ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'app_invitations', force: :cascade do |t|
-    t.integer 'inviter_id'
-    t.integer 'invitee_id'
-    t.string 'invitee_email'
-    t.integer 'developer_app_id'
-    t.boolean 'admin'
-    t.string 'status'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[developer_app_id invitee_email], name: 'index_app_invitations_on_developer_app_id_and_invitee_email',
+  create_table "app_invitations", force: :cascade do |t|
+    t.integer "inviter_id"
+    t.integer "invitee_id"
+    t.string "invitee_email"
+    t.integer "developer_app_id"
+    t.boolean "admin"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index %w[developer_app_id invitee_email], name:   "index_app_invitations_on_developer_app_id_and_invitee_email",
                                                 unique: true
-    t.index ['invitee_email'], name: 'index_app_invitations_on_invitee_email'
+    t.index ["invitee_email"], name: "index_app_invitations_on_invitee_email"
   end
 
-  create_table 'app_memberships', force: :cascade do |t|
-    t.boolean 'admin', default: false
-    t.bigint 'developer_app_id', null: false
-    t.bigint 'user_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.datetime 'deleted_at'
-    t.index ['deleted_at'], name: 'index_app_memberships_on_deleted_at'
-    t.index %w[developer_app_id user_id], name: 'index_app_memberships_on_developer_app_id_and_user_id', unique: true
-    t.index ['developer_app_id'], name: 'index_app_memberships_on_developer_app_id'
-    t.index ['user_id'], name: 'index_app_memberships_on_user_id'
+  create_table "app_memberships", force: :cascade do |t|
+    t.boolean "admin", default: false
+    t.bigint "developer_app_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_app_memberships_on_deleted_at"
+    t.index %w[developer_app_id user_id], name: "index_app_memberships_on_developer_app_id_and_user_id", unique: true
+    t.index ["developer_app_id"], name: "index_app_memberships_on_developer_app_id"
+    t.index ["user_id"], name: "index_app_memberships_on_user_id"
   end
 
-  create_table 'developer_apps', force: :cascade do |t|
-    t.string 'name'
-    t.string 'client_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.datetime 'archived_at'
-    t.index ['archived_at'], name: 'index_developer_apps_on_archived_at'
+  create_table "developer_apps", force: :cascade do |t|
+    t.string "name"
+    t.string "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.index ["archived_at"], name: "index_developer_apps_on_archived_at"
   end
 
-  create_table 'endpoints', force: :cascade do |t|
-    t.string 'path'
-    t.string 'method'
-    t.text 'description'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[path method], name: 'index_endpoints_on_path_and_method', unique: true
+  create_table "endpoints", force: :cascade do |t|
+    t.string "path"
+    t.string "method"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index %w[path method], name: "index_endpoints_on_path_and_method", unique: true
   end
 
-  create_table 'grants', force: :cascade do |t|
-    t.bigint 'endpoint_id', null: false
-    t.bigint 'developer_app_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['developer_app_id'], name: 'index_grants_on_developer_app_id'
-    t.index %w[endpoint_id developer_app_id], name: 'index_grants_on_endpoint_id_and_developer_app_id', unique: true
-    t.index ['endpoint_id'], name: 'index_grants_on_endpoint_id'
+  create_table "grants", force: :cascade do |t|
+    t.bigint "endpoint_id", null: false
+    t.bigint "developer_app_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["developer_app_id"], name: "index_grants_on_developer_app_id"
+    t.index %w[endpoint_id developer_app_id], name: "index_grants_on_endpoint_id_and_developer_app_id", unique: true
+    t.index ["endpoint_id"], name: "index_grants_on_endpoint_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'name', default: '', null: false
-    t.string 'email', default: '', null: false
-    t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.boolean 'platform_admin', default: false
-    t.string 'provider'
-    t.string 'uid'
-    t.string 'first_name'
-    t.string 'last_name'
-    t.string 'picture_url'
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+  create_table "users", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "platform_admin", default: false
+    t.string "provider"
+    t.string "uid"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "picture_url"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table 'versions', force: :cascade do |t|
-    t.string 'item_type', null: false
-    t.bigint 'item_id', null: false
-    t.string 'event', null: false
-    t.string 'whodunnit'
-    t.text 'object'
-    t.text 'object_changes'
-    t.datetime 'created_at'
-    t.index %w[item_type item_id], name: 'index_versions_on_item_type_and_item_id'
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.text "object_changes"
+    t.datetime "created_at"
+    t.index %w[item_type item_id], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key 'app_memberships', 'developer_apps'
-  add_foreign_key 'app_memberships', 'users'
-  add_foreign_key 'grants', 'developer_apps'
-  add_foreign_key 'grants', 'endpoints'
+  add_foreign_key "app_memberships", "developer_apps"
+  add_foreign_key "app_memberships", "users"
+  add_foreign_key "grants", "developer_apps"
+  add_foreign_key "grants", "endpoints"
 end

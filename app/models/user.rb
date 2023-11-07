@@ -2,14 +2,14 @@ class User < ApplicationRecord
   has_many :app_memberships, foreign_key: :user_id
   has_many :developer_apps, through: :app_memberships
   has_many :change_events
-  has_many :sent_invitations, class_name: 'AppInvitation', foreign_key: 'inviter_id'
-  has_many :received_invitations, class_name: 'AppInvitation', foreign_key: 'invitee_id'
+  has_many :sent_invitations, class_name: "AppInvitation", foreign_key: "inviter_id"
+  has_many :received_invitations, class_name: "AppInvitation", foreign_key: "invitee_id"
 
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: {maximum: 50}
   validates :email,
-            presence: true,
-            length: { maximum: 255, minimum: 3 },
-            format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
+            presence:   true,
+            length:     {maximum: 255, minimum: 3},
+            format:     {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i},
             uniqueness: true
 
   after_create :associate_app_invitations
@@ -22,9 +22,8 @@ class User < ApplicationRecord
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if (data = session['devise.linkedin_data'] && session['devise.linkedin_data']['extra']['raw_info']) && user.email.blank?
-        user.email = data['email']
-      end
+      data = session["devise.linkedin_data"]
+      user.email = data["email"] if data && data["extra"]["raw_info"] && user.email.blank?
     end
   end
 

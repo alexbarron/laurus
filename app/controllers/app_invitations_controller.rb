@@ -7,8 +7,8 @@ class AppInvitationsController < ApplicationController
 
   # GET /app_invitations or /app_invitations.json
   def index
-    @sent_invitations = current_user.sent_invitations.order('created_at DESC')
-    @received_invitations = current_user.received_invitations.order('created_at DESC')
+    @sent_invitations = current_user.sent_invitations.order("created_at DESC")
+    @received_invitations = current_user.received_invitations.order("created_at DESC")
   end
 
   # GET /app_invitations/1 or /app_invitations/1.json
@@ -21,23 +21,16 @@ class AppInvitationsController < ApplicationController
 
   # POST /app_invitations or /app_invitations.json
   def create
-    # @app_invitation = AppInvitation.new(app_invitation_params)
-    @app_invitation = current_user.sent_invitations.build(app_invitation_params)
-    @app_invitation.developer_app = @developer_app
+    @app_invitation = current_user.sent_invitations.build(
+      app_invitation_params.merge(developer_app_id: @developer_app.id)
+    )
 
-    if invitee = User.find_by(email: params[:app_invitation][:invitee_email])
-      @app_invitation.invitee_id = invitee.id
-    end
-
-    respond_to do |format|
-      if @app_invitation.save
-        format.html { redirect_to developer_app_app_memberships_path(developer_app_id: @developer_app.id) }
-        format.json { render :show, status: :created, location: @app_invitation }
-        AppInvitationMailer.invited(@app_invitation).deliver_later
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @app_invitation.errors, status: :unprocessable_entity }
-      end
+    if @app_invitation.save
+      flash[:success] = "#{@app_invitation.invitee_email} successfully invited"
+      redirect_to developer_app_app_memberships_path(developer_app_id: @developer_app.id)
+      AppInvitationMailer.invited(@app_invitation).deliver_later
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -49,7 +42,7 @@ class AppInvitationsController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to developer_app_app_memberships_path(developer_app_id: @developer_app.id),
-                    notice: 'App invitation was successfully destroyed.'
+                    notice: "App invitation was successfully destroyed."
       end
       format.json { head :no_content }
     end
@@ -58,20 +51,20 @@ class AppInvitationsController < ApplicationController
   # GET /developer_apps/1/app_invitations/1/accept
   def accept
     @app_invitation.accept
-    flash[:success] = 'App invitation accepted'
+    flash[:success] = "App invitation accepted"
     redirect_to @developer_app
   rescue StandardError
-    flash[:warning] = 'App invitation acceptance failed'
+    flash[:warning] = "App invitation acceptance failed"
     redirect_to app_invitations_path
   end
 
   # GET /developer_apps/1/app_invitations/1/decline
   def decline
     @app_invitation.decline
-    flash[:success] = 'App invitation declined'
+    flash[:success] = "App invitation declined"
     redirect_to app_invitations_path
   rescue StandardError
-    flash[:warning] = 'App invitation declining failed'
+    flash[:warning] = "App invitation declining failed"
     redirect_to app_invitations_path
   end
 
@@ -93,16 +86,16 @@ class AppInvitationsController < ApplicationController
 
   def authorized_to_invite?
     @current_user_membership = @developer_app.app_memberships.where(user_id: current_user.id).first
-    return if !!@current_user_membership && !!@current_user_membership.admin?
+    return if @current_user_membership&.admin?
 
-    flash[:warning] = 'Unauthorized request'
+    flash[:warning] = "Unauthorized request"
     redirect_to @developer_app
   end
 
   def correct_user?
     return if current_user == @app_invitation.invitee
 
-    flash[:warning] = 'Unauthorized request'
+    flash[:warning] = "Unauthorized request"
     redirect_to app_invitations_path
   end
 end

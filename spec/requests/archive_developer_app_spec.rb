@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "/developer_apps", type: :request do
   describe "PUT /developer_apps/:id/archive" do
-    before :each do 
+    before :each do
       @developer_app = create(:developer_app)
     end
 
@@ -19,7 +19,7 @@ RSpec.describe "/developer_apps", type: :request do
         sign_in(@user)
       end
 
-      context 'not a team member' do
+      context "not a team member" do
         it "cannot archive app " do
           put archive_developer_app_url(@developer_app)
           expect(response).to have_http_status(:see_other)
@@ -27,7 +27,7 @@ RSpec.describe "/developer_apps", type: :request do
         end
       end
 
-      context 'with read-only membership' do
+      context "with read-only membership" do
         it "cannot archive app" do
           @developer_app.app_memberships.create(user_id: @user.id)
           put archive_developer_app_url(@developer_app)
@@ -39,7 +39,7 @@ RSpec.describe "/developer_apps", type: :request do
   end
 
   describe "PUT /developer_apps/:id/unarchive" do
-    before :each do 
+    before :each do
       @developer_app = create(:developer_app, archived_at: Time.now)
     end
 
@@ -56,7 +56,7 @@ RSpec.describe "/developer_apps", type: :request do
         sign_in(@user)
       end
 
-      context 'not a team member' do
+      context "not a team member" do
         it "cannot unarchive app " do
           put unarchive_developer_app_url(@developer_app)
           expect(response).to have_http_status(:see_other)
@@ -64,7 +64,7 @@ RSpec.describe "/developer_apps", type: :request do
         end
       end
 
-      context 'with read-only membership' do
+      context "with read-only membership" do
         it "cannot unarchive app" do
           @developer_app.app_memberships.create(user_id: @user.id)
           put unarchive_developer_app_url(@developer_app)

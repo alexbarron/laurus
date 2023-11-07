@@ -8,7 +8,7 @@ class DeveloperApp < ApplicationRecord
 
   before_create :generate_client_id
 
-  validates :name, presence: true, length: { maximum: 50, minimum: 3 }
+  validates :name, presence: true, length: {maximum: 50, minimum: 3}
 
   def archive
     self.archived_at = Time.now
