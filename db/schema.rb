@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_131257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,8 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[developer_app_id invitee_email], name:   "index_app_invitations_on_developer_app_id_and_invitee_email",
-                                                unique: true
+    t.index ["developer_app_id", "invitee_email"], name: "index_app_invitations_on_developer_app_id_and_invitee_email", unique: true
     t.index ["invitee_email"], name: "index_app_invitations_on_invitee_email"
   end
 
@@ -36,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_app_memberships_on_deleted_at"
-    t.index %w[developer_app_id user_id], name: "index_app_memberships_on_developer_app_id_and_user_id", unique: true
+    t.index ["developer_app_id", "user_id"], name: "index_app_memberships_on_developer_app_id_and_user_id", unique: true
     t.index ["developer_app_id"], name: "index_app_memberships_on_developer_app_id"
     t.index ["user_id"], name: "index_app_memberships_on_user_id"
   end
@@ -56,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[path method], name: "index_endpoints_on_path_and_method", unique: true
+    t.index ["path", "method"], name: "index_endpoints_on_path_and_method", unique: true
   end
 
   create_table "grants", force: :cascade do |t|
@@ -65,7 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["developer_app_id"], name: "index_grants_on_developer_app_id"
-    t.index %w[endpoint_id developer_app_id], name: "index_grants_on_endpoint_id_and_developer_app_id", unique: true
+    t.index ["endpoint_id", "developer_app_id"], name: "index_grants_on_endpoint_id_and_developer_app_id", unique: true
     t.index ["endpoint_id"], name: "index_grants_on_endpoint_id"
   end
 
@@ -79,11 +78,6 @@ ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "platform_admin", default: false
-    t.string "provider"
-    t.string "uid"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "picture_url"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -96,7 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 20_231_103_152_351) do
     t.text "object"
     t.text "object_changes"
     t.datetime "created_at"
-    t.index %w[item_type item_id], name: "index_versions_on_item_type_and_item_id"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "app_memberships", "developer_apps"
