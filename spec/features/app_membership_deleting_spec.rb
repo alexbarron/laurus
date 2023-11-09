@@ -14,10 +14,11 @@ feature "App membership deleting" do
       sign_in(@teammate)
     end
 
-    scenario "cannot see Edit Role button" do
+    scenario "cannot see Remove button" do
       visit developer_app_path(@developer_app)
+      click_link "Team Members"
 
-      expect(page).not_to have_content "Remove"
+      expect(page).not_to have_css("a", exact_text: "Remove", visible: true, count: 1)
     end
   end
 

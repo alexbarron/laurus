@@ -1,0 +1,24 @@
+<%= render 'developer_apps/app_header' %>
+<h3 class="center">Removed Team Members</h3>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+    <th>User</th>
+    <th>Email</th>
+    <th>Role</th>
+    </tr>
+    </thead>
+
+    <% @app_memberships.each do |app_membership| %>
+      <tr>
+        <td><%= app_membership.user.name %></td>
+        <td><%= app_membership.user.email %></td>
+        <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
+        <% if current_user.platform_admin? || (@current_user_membership.admin? && @current_user_membership != app_membership) %>
+            <td><%= link_to "Restore", restore_member_path(app_membership, developer_app_id: @developer_app.id), class: 'btn btn-primary', data: { "turbo-method": :put, turbo_confirm: "Are you sure?" } %></td>
+        <% else %>
+            <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>

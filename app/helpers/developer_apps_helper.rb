@@ -27,7 +27,7 @@ module DeveloperAppsHelper
     if version.event == "update" && version.changeset.key?(:admin)
       activity += role_change(version)
     elsif version.event == "update" && version.changeset.key?(:deleted_at)
-      activity += membership_removal(version)
+      activity += membership_removal_and_restoring(version)
     end
     activity.html_safe
   end
@@ -67,7 +67,11 @@ module DeveloperAppsHelper
     "changed #{affected_user(version).name}'s role to #{new_role}</li>"
   end
 
-  def membership_removal(version)
-    "removed #{affected_user(version).name}</li>"
+  def membership_removal_and_restoring(version)
+    if version.changeset[:deleted_at][1].nil?
+      "restored #{affected_user(version).name}"
+    else
+      "removed #{affected_user(version).name}</li>"
+    end
   end
 end

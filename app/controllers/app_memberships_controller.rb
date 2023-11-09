@@ -1,10 +1,10 @@
 class AppMembershipsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_app_membership, except: [:index]
+  before_action :set_app_membership, except: [:index, :removed]
   before_action :set_developer_app
-  before_action :cannot_modify_own_membership, except: [:index]
+  before_action :cannot_modify_own_membership, except: [:index, :removed]
   before_action -> { find_current_user_membership(@developer_app) }
-  before_action -> { authorized_to_edit_app?(@developer_app) }, except: [:index]
+  before_action -> { authorized_to_edit_app?(@developer_app) }, except: [:index, :removed]
 
   def index
     @app_memberships = @developer_app.app_memberships.kept
@@ -30,6 +30,19 @@ class AppMembershipsController < ApplicationController
                     notice: "#{@app_membership.user.name} was removed from the app."
       end
       format.json { head :no_content }
+    end
+  end
+
+  def removed
+    @app_memberships = @developer_app.app_memberships.discarded
+  end
+
+  def restore
+    if @app_membership.undiscard
+      flash[:success] = "#{@app_membership.user.name} successfully restored"
+      redirect_to developer_app_app_memberships_path(developer_app_id: @app_membership.developer_app.id)
+    else
+      render :removed, status: :unprocessable_entity
     end
   end
 
