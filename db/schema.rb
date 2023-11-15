@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_131257) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_144007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_131257) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "resource_id"
     t.index ["path", "method"], name: "index_endpoints_on_path_and_method", unique: true
   end
 
@@ -66,6 +67,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_131257) do
     t.index ["developer_app_id"], name: "index_grants_on_developer_app_id"
     t.index ["endpoint_id", "developer_app_id"], name: "index_grants_on_endpoint_id_and_developer_app_id", unique: true
     t.index ["endpoint_id"], name: "index_grants_on_endpoint_id"
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.string "name"
+    t.jsonb "schema", default: "{}", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["schema"], name: "index_resources_on_schema", using: :gin
   end
 
   create_table "users", force: :cascade do |t|

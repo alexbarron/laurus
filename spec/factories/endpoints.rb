@@ -3,5 +3,6 @@ FactoryBot.define do
     path { "/v2/widgets" }
     http_method { "POST" } # aliased because method is reserved and factory fails with it
     description { "A brilliant endpoint!" }
+    resource
   end
 end

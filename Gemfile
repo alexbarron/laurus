@@ -44,6 +44,7 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 gem "sassc-rails"
 
+gem "activerecord_json_validator"
 gem "bootstrap-will_paginate", "1.0.0"
 gem "devise", "4.9.2"
 gem "discard", "~> 1.2"

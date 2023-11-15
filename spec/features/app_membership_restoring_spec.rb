@@ -6,7 +6,8 @@ feature "App membership restoring" do
     @admin_user = create(:user)
     @admin_app_membership = @developer_app.app_memberships.create(user_id: @admin_user.id, admin: true)
     @removed_user = create(:user, email: "removed@example.com", name: "Removed User")
-    @removed_app_membership = @developer_app.app_memberships.create(user_id: @removed_user.id, admin: false, deleted_at: Time.now)
+    @removed_app_membership = @developer_app.app_memberships.create(user_id: @removed_user.id, admin: false,
+                                                                    deleted_at: Time.now)
   end
 
   context "as a logged in non admin team member" do

@@ -22,7 +22,8 @@ Rails.application.routes.draw do
   get "/developer_apps/:developer_app_id/app_invitations/:id/decline", to: "app_invitations#decline",
                                                                        as: :decline_app_invitation
   get "/developer_apps/:developer_app_id/app_memberships/removed", to: "app_memberships#removed", as: :removed_members
-  put "/developer_apps/:developer_app_id/app_memberships/:id/restore", to: "app_memberships#restore", as: :restore_member
+  put "/developer_apps/:developer_app_id/app_memberships/:id/restore", to: "app_memberships#restore",
+                                                                       as: :restore_member
   post "/endpoints/import", to: "endpoints#import"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,10 +1,10 @@
 class AppMembershipsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_app_membership, except: [:index, :removed]
+  before_action :set_app_membership, except: %i[index removed]
   before_action :set_developer_app
-  before_action :cannot_modify_own_membership, except: [:index, :removed]
+  before_action :cannot_modify_own_membership, except: %i[index removed]
   before_action -> { find_current_user_membership(@developer_app) }
-  before_action -> { authorized_to_edit_app?(@developer_app) }, except: [:index, :removed]
+  before_action -> { authorized_to_edit_app?(@developer_app) }, except: %i[index removed]
 
   def index
     @app_memberships = @developer_app.app_memberships.kept

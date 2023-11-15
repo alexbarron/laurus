@@ -54,6 +54,9 @@ GEM
     activerecord (7.0.8)
       activemodel (= 7.0.8)
       activesupport (= 7.0.8)
+    activerecord_json_validator (2.1.5)
+      activerecord (>= 4.2.0, < 8)
+      json_schemer (~> 0.2.18)
     activestorage (7.0.8)
       actionpack (= 7.0.8)
       activejob (= 7.0.8)
@@ -106,6 +109,8 @@ GEM
     diff-lcs (1.5.0)
     discard (1.3.0)
       activerecord (>= 4.2, < 8)
+    ecma-re-validator (0.4.0)
+      regexp_parser (~> 2.2)
     erubi (1.12.0)
     execjs (2.9.1)
     factory_bot (6.2.1)
@@ -118,6 +123,7 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hana (1.3.7)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.1)
@@ -131,6 +137,12 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.3)
+    json_schemer (0.2.25)
+      ecma-re-validator (~> 0.3)
+      hana (~> 1.3)
+      regexp_parser (~> 2.0)
+      simpleidn (~> 0.2)
+      uri_template (~> 0.7)
     language_server-protocol (3.17.0.3)
     launchy (2.5.2)
       addressable (~> 2.8)
@@ -275,6 +287,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simpleidn (0.2.1)
+      unf (~> 0.1.4)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -295,7 +309,11 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.9)
     unicode-display_width (2.5.0)
+    uri_template (0.7.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -321,6 +339,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord_json_validator
   bootsnap
   bootstrap-sass (= 3.4.1)
   bootstrap-will_paginate (= 1.0.0)

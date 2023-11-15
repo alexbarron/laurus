@@ -1,6 +1,7 @@
 class Endpoint < ApplicationRecord
   has_many :grants
   has_many :developer_apps, through: :grants
+  belongs_to :resource, optional: true
 
   validates :path, presence:   true,
                    length:     {maximum: 50},
