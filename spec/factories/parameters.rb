@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :endpoint do
+  factory :parameter do
     name { "surname" }
     data_type { "string" }
     description { "A brilliant parameter!" }

@@ -12,18 +12,7 @@ class Endpoint < ApplicationRecord
 
   alias_attribute :http_method, :method
 
-  def self.import_openapi_spec(spec)
-    parsed_spec = OpenAPIParser.parse(YAML.load_file(spec))
-    endpoints = []
-    parsed_spec.paths.raw_schema.each do |key, value|
-      value.each_key do |method|
-        endpoints << {
-          path:        key,
-          method:      method.upcase,
-          description: value[method]["summary"]
-        }
-      end
-    end
-    Endpoint.create(endpoints)
+  def self.import_openapi(spec)
+    OpenAPIImporter.new(spec).import
   end
 end
