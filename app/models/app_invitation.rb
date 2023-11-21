@@ -14,7 +14,7 @@ class AppInvitation < ApplicationRecord
 
   def accept
     app_membership = developer_app.app_memberships.new(
-      admin:,
+      admin:   admin,
       user_id: invitee.id
     )
     return unless app_membership.save
