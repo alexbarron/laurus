@@ -25,22 +25,26 @@ class OpenAPIImporter
   def import_parameters(endpoint, parameters)
     parameters&.each do |parameter|
       if parameter.key?("$ref")
-        parameter = Parameter.find_or_create_by(find_referenced_parameter(parameter))
+        parameter_attributes = find_referenced_parameter(parameter)
+        description = parameter_attributes.delete(:description)
+        parameter = Parameter.find_or_create_by(parameter_attributes)
       elsif parameter.key?("name")
+        description = parameter["description"]
         parameter = Parameter.find_or_create_by(name:      parameter["name"],
                                                 location:  parameter["in"],
                                                 data_type: parameter["schema"]["type"])
       end
-      endpoint.parameters << parameter unless endpoint.parameters.include?(parameter)
+      endpoint.parameter_references.find_or_create_by(parameter_id: parameter.id, description: description)
     end
   end
 
   def find_referenced_parameter(parameter)
     name = parameter["$ref"].split("/").last
     {
-      name:      name,
-      location:  parsed_spec.components.parameters[name].in,
-      data_type: parsed_spec.components.parameters[name].schema.type
+      name:        name,
+      location:    parsed_spec.components.parameters[name].in,
+      data_type:   parsed_spec.components.parameters[name].schema.type,
+      description: parsed_spec.components.parameters[name].description
     }
   end
 end
