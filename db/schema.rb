@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_115646) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_22_131536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,6 +80,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_115646) do
     t.integer "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "schemas", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.text "description"
+    t.string "data_type"
+    t.jsonb "properties", default: "{}", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["properties"], name: "index_schemas_on_properties", using: :gin
   end
 
   create_table "users", force: :cascade do |t|

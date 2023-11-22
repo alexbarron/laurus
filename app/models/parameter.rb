@@ -3,7 +3,7 @@ class Parameter < ApplicationRecord
   has_many :endpoints, through: :parameter_references
   enum :location, %i[path query header cookie]
 
-  def description(endpoint)
-    parameter_references.where(endpoint_id: endpoint.id).first.description
-  end
+  validates :name, presence: true
+  validates :data_type, presence: true, inclusion: {in: %w[string number integer boolean array object]}
+  validates :location, presence: true
 end
