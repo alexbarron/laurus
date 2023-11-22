@@ -1,13 +1,15 @@
 class EndpointsController < ApplicationController
   before_action :authenticate_user!
   before_action :platform_admin?
-  before_action :set_endpoint, only: %i[show edit update]
+  before_action :set_endpoint, only: %i[edit update]
 
   def index
     @endpoints = Endpoint.ordered_by_path.paginate(page: params[:page])
   end
 
-  def show; end
+  def show
+    @endpoint = Endpoint.includes(:parameter_references, :parameters).find(params[:id])
+  end
 
   def new
     @endpoint = Endpoint.new

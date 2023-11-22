@@ -13,12 +13,12 @@
     <th>Location</th>
     </tr>
     </thead>
-<% @endpoint.parameters.each do |parameter| %>
+<% @endpoint.parameter_references.each do |parameter_reference| %>
     <tr>
-        <td><%= parameter.name %></td>
-        <td><%= parameter.data_type %></td>
-        <td><%= parameter.description %></td>
-        <td><%= parameter.location %></td>
+        <td><%= parameter_reference.parameter.name %></td>
+        <td><%= parameter_reference.parameter.data_type %></td>
+        <td><%= parameter_reference.description %></td>
+        <td><%= parameter_reference.parameter.location %></td>
     </tr>
 <% end %>
 </table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_20_150410) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_22_115646) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,11 +58,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_150410) do
     t.index ["path", "method"], name: "index_endpoints_on_path_and_method", unique: true
   end
 
-  create_table "endpoints_parameters", id: false, force: :cascade do |t|
-    t.bigint "endpoint_id", null: false
-    t.bigint "parameter_id", null: false
-  end
-
   create_table "grants", force: :cascade do |t|
     t.bigint "endpoint_id", null: false
     t.bigint "developer_app_id", null: false
@@ -73,11 +68,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_150410) do
     t.index ["endpoint_id"], name: "index_grants_on_endpoint_id"
   end
 
+  create_table "parameter_references", force: :cascade do |t|
+    t.bigint "endpoint_id", null: false
+    t.bigint "parameter_id", null: false
+    t.string "description"
+  end
+
   create_table "parameters", force: :cascade do |t|
     t.string "name"
     t.string "data_type"
     t.integer "location"
-    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
