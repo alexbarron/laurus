@@ -7,6 +7,7 @@ class OpenAPIImporter
 
   def import
     import_schemas
+    import_schema_refs
     import_paths
   end
 
@@ -27,6 +28,15 @@ class OpenAPIImporter
     end
   end
 
+  def import_schema_refs
+    parsed_spec.components.schemas.each do |name, attributes|
+      parent_schema = Schema.where(name: name).first
+
+      combo_schemas(attributes.raw_schema, parent_schema)
+      property_schemas(attributes.raw_schema["properties"], parent_schema)
+    end
+  end
+
   private
 
   def import_endpoint(path, methods)
@@ -35,6 +45,38 @@ class OpenAPIImporter
       endpoint.update(description: properties["summary"])
       import_parameters(endpoint, properties["parameters"])
     end
+  end
+
+  def combo_schemas(raw_schema, parent_schema)
+    if raw_schema.has_key?("allOf")
+      raw_schema["allOf"].each do |ref|
+        import_schema_reference(ref["$ref"], parent_schema)
+      end
+    elsif raw_schema.has_key?("anyOf")
+      raw_schema["anyOf"].each do |ref|
+        import_schema_reference(ref["$ref"], parent_schema)
+      end
+    elsif raw_schema.has_key?("oneOf")
+      raw_schema["oneOf"].each do |ref|
+        import_schema_reference(ref["$ref"], parent_schema)
+      end
+    end
+  end
+
+  def property_schemas(properties, parent_schema)
+    properties.each do |_property, data|
+      if data.has_key?("$ref")
+        import_schema_reference(data["$ref"], parent_schema)
+      elsif data["type"] == "array" && data["items"].has_key?("$ref")
+        import_schema_reference(data["items"]["$ref"], parent_schema)
+      end
+    end
+  end
+
+  def import_schema_reference(child_schema_path, parent_schema)
+    child_schema_name = child_schema_path.split("/").last
+    child_schema = Schema.where(name: child_schema_name).first
+    SchemaReference.find_or_create_by(referenced_id: child_schema.id, schema_id: parent_schema.id)
   end
 
   def import_parameters(endpoint, parameters)

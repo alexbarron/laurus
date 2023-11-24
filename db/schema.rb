@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_131536) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_24_123654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_131536) do
     t.string "name"
     t.string "data_type"
     t.integer "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "schema_references", force: :cascade do |t|
+    t.integer "referenced_id"
+    t.integer "endpoint_id"
+    t.integer "schema_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
