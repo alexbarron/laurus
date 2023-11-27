@@ -42,5 +42,34 @@ feature "Endpoint creation" do
       expect(page).to have_content "#{method} #{path}"
       expect(page).to have_content description
     end
+
+    scenario "can import OpenAPI spec" do
+      spec = "spec/fixtures/files/petstore.yaml"
+      parsed_spec = OpenAPIParser.parse(YAML.load_file(spec))
+
+      expected_count = 0
+      parsed_spec.paths.raw_schema.each {|_k, v|
+        expected_count += v.count
+      }
+
+      path_to_validate = parsed_spec.paths.raw_schema.first
+      path_attributes = path_to_validate[1]["get"]["parameters"][0]
+
+      visit new_endpoint_path
+      attach_file "openapi_spec", spec
+      click_button "Import"
+
+      expect(page).to have_current_path(endpoints_path)
+      expect(page).to have_content "/pet"
+      expect(page).to have_content "Add a new pet to the store"
+      expect(Endpoint.count).to be expected_count
+
+      click_link path_to_validate[0]
+
+      expect(page).to have_content path_attributes["name"]
+      expect(page).to have_content path_attributes["in"]
+      expect(page).to have_content path_attributes["description"]
+      expect(page).to have_content path_attributes["schema"]["type"]
+    end
   end
 end
