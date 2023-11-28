@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_24_123654) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_091512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,7 +55,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_123654) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "responses", default: "{}"
+    t.jsonb "request_body", default: "{}"
     t.index ["path", "method"], name: "index_endpoints_on_path_and_method", unique: true
+    t.index ["request_body"], name: "index_endpoints_on_request_body", using: :gin
+    t.index ["responses"], name: "index_endpoints_on_responses", using: :gin
   end
 
   create_table "grants", force: :cascade do |t|

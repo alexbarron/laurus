@@ -1,4 +1,6 @@
 class JsonbSerializers
+  require "active_support/core_ext/hash/indifferent_access"
+
   def self.dump(hash)
     hash.to_json
   end

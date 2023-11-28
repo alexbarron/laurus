@@ -7,7 +7,7 @@ class OpenAPIImporter
 
   def import
     import_schemas
-    import_schema_refs
+    # import_schema_refs
     import_paths
   end
 
@@ -42,8 +42,40 @@ class OpenAPIImporter
   def import_endpoint(path, methods)
     methods.each do |method, properties|
       endpoint = Endpoint.find_or_initialize_by(path: path, method: method.upcase)
+
+      process_responses(endpoint, properties["responses"]) if properties["responses"]
+      process_request_body(endpoint, properties["requestBody"]) if properties["requestBody"]
+
       endpoint.update(description: properties["summary"])
       import_parameters(endpoint, properties["parameters"])
+    end
+  end
+
+  def process_responses(endpoint, response_properties)
+    endpoint.responses = response_properties
+    response_properties.each do |response_code, attributes|
+      content_schemas(endpoint, attributes)
+    end
+  end
+
+  def process_request_body(endpoint, request_body_properties)
+    endpoint.request_body = request_body_properties
+    if !request_body_properties["content"].nil?
+      content_schemas(endpoint, request_body_properties)
+    else
+      request_body_name = get_component_name(request_body_properties["$ref"])
+      content_schemas(endpoint, parsed_spec.components.request_bodies[request_body_name].raw_schema)
+    end
+  end
+
+  def content_schemas(endpoint, attributes)
+    attributes["content"]&.each do |_response_type, data|
+      # Check if referenced schema is in array
+      schema_path = data["schema"]["$ref"] || data["schema"]["items"]["$ref"]
+      referenced_schema = Schema.where(name: get_component_name(schema_path)).first
+      endpoint.schema_references.find_or_create_by(referenced_id: referenced_schema.id)
+    rescue StandardError
+      next # If reference doesn't fit above formats, skip it
     end
   end
 
@@ -74,7 +106,7 @@ class OpenAPIImporter
   end
 
   def import_schema_reference(child_schema_path, parent_schema)
-    child_schema_name = child_schema_path.split("/").last
+    child_schema_name = get_component_name(child_schema_path)
     child_schema = Schema.where(name: child_schema_name).first
     SchemaReference.find_or_create_by(referenced_id: child_schema.id, schema_id: parent_schema.id)
   end
@@ -106,12 +138,16 @@ class OpenAPIImporter
   end
 
   def find_referenced_parameter(parameter)
-    name = parameter["$ref"].split("/").last
+    name = get_component_name(parameter["$ref"])
     {
       name:        name,
       location:    parsed_spec.components.parameters[name].in,
       data_type:   parsed_spec.components.parameters[name].schema.type,
       description: parsed_spec.components.parameters[name].description
     }
+  end
+
+  def get_component_name(path)
+    path.split("/").last
   end
 end
