@@ -120,13 +120,15 @@ class ImportService
     parameters&.each do |openapi_parameter|
       if openapi_parameter.key?("$ref")
         parameter_attributes = find_referenced_parameter(openapi_parameter)
+        location = parameter_attributes.delete(:location)
         description = parameter_attributes.delete(:description)
         parameter = component_parameter(parameter_attributes)
       elsif openapi_parameter.key?("name")
+        location = openapi_parameter["in"]
         description = openapi_parameter["description"]
         parameter = path_parameter(openapi_parameter)
       end
-      endpoint.parameter_references.find_or_initialize_by(parameter_id: parameter.id).update(description: description)
+      endpoint.parameter_references.find_or_initialize_by(parameter_id: parameter.id).update(description: description, location: location)
     end
   end
 
@@ -138,7 +140,7 @@ class ImportService
 
   def path_parameter(openapi_parameter)
     parameter = Parameter.find_or_initialize_by(name: openapi_parameter["name"])
-    parameter.update(location: openapi_parameter["in"], data_type: openapi_parameter["schema"]["type"])
+    parameter.update(data_type: openapi_parameter["schema"]["type"])
     parameter
   end
 

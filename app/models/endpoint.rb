@@ -19,8 +19,4 @@ class Endpoint < ApplicationRecord
   scope :ordered_by_path, -> { order(path: :asc, method: :asc) }
 
   alias_attribute :http_method, :method
-
-  def self.import_openapi(spec)
-    OpenAPIService::ImportService.new(spec).call
-  end
 end
