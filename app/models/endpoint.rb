@@ -7,7 +7,7 @@ class Endpoint < ApplicationRecord
 
   has_many :parameter_references
   has_many :parameters, through: :parameter_references
-  
+
   has_many :schema_references
   has_many :dependent_schemas, through: :schema_references, source: :parent
 
@@ -21,6 +21,6 @@ class Endpoint < ApplicationRecord
   alias_attribute :http_method, :method
 
   def self.import_openapi(spec)
-    OpenAPIImporter.new(spec).import
+    OpenAPIService::ImportService.new(spec).call
   end
 end

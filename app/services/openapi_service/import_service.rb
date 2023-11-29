@@ -1,15 +1,22 @@
-class OpenAPIImporter
+module OpenAPIService
+class ImportService
   attr_reader :parsed_spec
 
   def initialize(spec_file)
     @parsed_spec = OpenAPIParser.parse(YAML.load_file(spec_file))
   end
 
-  def import
+  def call
     import_schemas
-    # import_schema_refs
+    import_schema_refs
     import_paths
+    rescue StandardError => e
+      OpenStruct.new({success?: false, error: e})
+    else
+      OpenStruct.new({success?: true})
   end
+
+  private
 
   def import_schemas
     parsed_spec.components.schemas.each do |name, attributes|
@@ -36,8 +43,6 @@ class OpenAPIImporter
       property_schemas(attributes.raw_schema["properties"], parent_schema)
     end
   end
-
-  private
 
   def import_endpoint(path, methods)
     methods.each do |method, properties|
@@ -150,4 +155,5 @@ class OpenAPIImporter
   def get_component_name(path)
     path.split("/").last
   end
+end
 end

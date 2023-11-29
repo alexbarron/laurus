@@ -38,7 +38,7 @@ class EndpointsController < ApplicationController
   end
 
   def import
-    if Endpoint.import_openapi(params[:openapi_spec])
+    if OpenAPIService::ImportService.new(params[:openapi_spec]).call
       redirect_to endpoints_path, notice: "Successfully imported endpoints"
     else
       render :new, status: :unprocessable_entity
