@@ -18,7 +18,7 @@ module EndpointsHelper
 
   def json_schema(schema_ref)
     schema = @endpoint.dependent_schemas.where(name: schema_name(schema_ref)).first.properties_with_dependents
-    JSON.pretty_generate(schema)
+    schema_ref.has_key?("$ref") ? JSON.pretty_generate(schema) : JSON.pretty_generate([schema])
   end
 
   def schema_name(schema_ref)
