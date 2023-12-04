@@ -22,3 +22,11 @@
     </tr>
 <% end %>
 </table>
+
+<h4>Default Request and Response Bodies</h4>
+
+<% @endpoint.responses.each do |code, body| %>
+    <h5><%= code %></h5>
+    <%= render_response_body_schema(body) %>
+    
+<% end %>
