@@ -16,5 +16,5 @@
     <p>This app has not been granted any endpoints.</p>
 <% end %>
 <% if user_signed_in? && current_user.platform_admin? %>
-    <%= link_to "Manage Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'btn btn-primary' %>
+    <%= link_to "Manage Grants", "/developer_apps/#{@developer_app.id}/manage_grants", class: 'text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' %>
 <% end %>

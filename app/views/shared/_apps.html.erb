@@ -1,6 +1,6 @@
 <h3 class="center">My Apps</h3>
 
-<%= link_to "New App", new_developer_app_path, class: "btn btn-primary" %>
+<%= link_to "New App", new_developer_app_path, class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
 
 <div class="container">
 <% @developer_apps.each do |developer_app| %>
@@ -9,7 +9,7 @@
         <div>
             <span><strong>Client ID:</strong> <%= developer_app.client_id %></span><br />
             <span><strong>Created:</strong> <%= developer_app.created_at.strftime("%b %d, %Y") %></span><br /><br />
-            <div class="text-center"><%= link_to "Manage", developer_app, class: "btn btn-primary" %></div>
+            <div class="text-center"><%= link_to "Manage", developer_app, class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %></div>
         </div>
     </div>
 <% end %>

@@ -14,4 +14,4 @@ Once you've successfully signed up, you can proceed with accepting the invitatio
 
 You can accept the invitation from the 'App Invitations' page or by following the link below.
 
-<%= button_to "Accept Invitation", accept_app_invitation_url(developer_app_id: @app_invitation.developer_app.id, id: @app_invitation.id), method: :get, class: 'btn btn-success' %>
+<%= button_to "Accept Invitation", accept_app_invitation_url(developer_app_id: @app_invitation.developer_app.id, id: @app_invitation.id), method: :get, class: 'focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' %>

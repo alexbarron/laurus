@@ -4,7 +4,7 @@
             <td><%= app_membership.admin? ? "Admin" : "Read-only" %></td>
             <% if current_user.platform_admin? || (@current_user_membership.admin? && @current_user_membership != app_membership) %>
                 <td><%= link_to "Edit Role", edit_developer_app_app_membership_path(app_membership, developer_app_id: @developer_app.id), class: 'btn btn-warning' %></td>
-                <td><%= link_to "Remove", developer_app_app_membership_path(app_membership, developer_app_id: @developer_app.id), class: 'btn btn-danger', data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %></td>
+                <td><%= link_to "Remove", developer_app_app_membership_path(app_membership, developer_app_id: @developer_app.id), class: 'focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900', data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %></td>
             <% else %>
                 <td></td>
             <% end %>

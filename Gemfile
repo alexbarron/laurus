@@ -15,7 +15,9 @@ gem "sprockets-rails"
 gem "puma", "~> 5.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
+gem "propshaft"
+gem "jsbundling-rails"
+gem "cssbundling-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
@@ -52,6 +54,8 @@ gem "openapi_parser"
 gem "paper_trail", "15.0.0"
 gem "securerandom", "0.2.2"
 gem "will_paginate", "3.3.1"
+gem "simple_form"
+gem "simple_form-tailwind"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -1,14 +1,25 @@
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
+<div class="flex items-center justify-center p-12">
+    <div class="mx-auto w-full max-w-[550px]">
         <%= form_with model: @developer_app do |f| %>
+            <% if @developer_app.errors.any? %>
+                <div style="color: red">
+                    <h2><%= pluralize(@developer_app.errors.count, "error") %> prohibited this from being saved:</h2>
 
-            <%= render 'shared/error_messages', object: f.object %>
+                    <ul>
+                    <% @developer_app.errors.each do |error| %>
+                        <li><%= error.full_message %></li>
+                    <% end %>
+                    </ul>
+                </div>
+            <% end %>
+            <div class="mb-5">
+                <%= f.label "App Name" %>
+                <%= f.text_field :name, class: 'w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md' %>
+            </div>
 
-            <%= f.label "App Name" %>
-            <%= f.text_field :name, class: 'form-control' %>
-
-            <%= f.submit "Submit", class: "btn btn-primary" %>
-
+            <div>
+                <%= f.submit "Submit", class: "hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none" %>
+            </div>
         <% end %>
     </div>
 </div>

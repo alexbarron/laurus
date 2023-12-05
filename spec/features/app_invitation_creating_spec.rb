@@ -47,7 +47,7 @@ feature "App invitation creating" do
       click_on "Add Members"
 
       fill_in "app_invitation_invitee_email", with: @invited_user.email
-      click_on "Submit"
+      click_on "Invite"
 
       expect(page).to have_content @invited_user.name
       expect(page).to have_content @invited_user.email
@@ -68,7 +68,7 @@ feature "App invitation creating" do
       click_on "Add Members"
 
       fill_in "app_invitation_invitee_email", with: @invited_user.email
-      click_on "Submit"
+      click_on "Invite"
 
       expect(page).to have_content "Invitee email has already been invited to this developer app"
     end

@@ -64,6 +64,7 @@ feature "Endpoint creation" do
       expect(page).to have_content path_parameters["in"]
       expect(page).to have_content path_parameters["description"]
       expect(page).to have_content path_parameters["schema"]["type"]
+      
     end
   end
 end

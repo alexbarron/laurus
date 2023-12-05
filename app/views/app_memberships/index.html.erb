@@ -1,7 +1,7 @@
 
 <%= render 'developer_apps/app_header' %>
 <h3 class="center">Team Members</h3>
-        <%= link_to "See Removed Members", removed_members_path(@developer_app), class: "btn btn-primary" %>
+        <%= link_to "See Removed Members", removed_members_path(@developer_app), class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
     <%= turbo_frame_tag("app-members") do %>
     <table class="table table-hover">
         <thead class="thead-dark">
@@ -36,6 +36,6 @@
     <% end %>
 
     <% if current_user.platform_admin? || @current_user_membership.admin? %>
-        <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'btn btn-primary' %>
+        <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' %>
     <% end %>
 <% end %>

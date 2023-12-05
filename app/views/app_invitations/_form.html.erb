@@ -1,8 +1,10 @@
 <%= turbo_frame_tag("app-members") do %>
+<div class="flex items-center justify-center p-12">
+    <div class="mx-auto w-full max-w-[550px]">
   <%= form_with(scope: :app_invitation, url: developer_app_app_invitations_path(@developer_app)) do |form| %>
     <% if app_invitation.errors.any? %>
       <div style="color: red">
-        <h2><%= pluralize(app_invitation.errors.count, "error") %> prohibited this app_invitation from being saved:</h2>
+        <h2><%= pluralize(app_invitation.errors.count, "error") %> prohibited this from being saved:</h2>
 
         <ul>
           <% app_invitation.errors.each do |error| %>
@@ -12,19 +14,22 @@
       </div>
     <% end %>
 
-    <div>
-      <%= form.label :invitee_email, style: "display: block" %>
-      <%= form.text_field :invitee_email %>
+    <div class="mb-5">
+      <%= form.label :invitee_email, style: "display: block", class: "mb-3 text-base font-medium text-[#07074D]" %>
+      <%= form.text_field :invitee_email, class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" %>
     </div>
 
-    <div>
-      <%= form.label :admin, style: "display: block" %>
-      <%= form.check_box :admin %>
+    <div class="flex items-start mb-5">
+      <div class="flex items-center h-5">
+        <%= form.check_box :admin, class: "w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" %>
+      </div>
+      <%= form.label :admin, class: "ms-2 mb-3 text-base font-medium text-[#07074D]" %>
     </div>
-
-    <div class="button-box">
-        <%= form.submit "Submit", class: "btn btn-primary" %>
-        <%= button_to "Cancel", developer_app_path(@developer_app, inline: true), class: 'btn btn-warning' %>
+    <div>
+        <%= form.submit "Invite", class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+        <%= button_to "Cancel", developer_app_path(@developer_app, inline: true), class: 'text-[#07074D]' %>
     </div>
   <% end %>
+  </div>
+  </div>
 <% end %>

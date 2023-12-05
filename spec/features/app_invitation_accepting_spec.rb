@@ -69,7 +69,7 @@ feature "App invitation accepting" do
       fill_in "user_email", with: @app_invitation2.invitee_email
       fill_in "user_password", with: "password"
       fill_in "user_password_confirmation", with: "password"
-      click_on "Sign up"
+      click_on "Sign Up"
 
       expect(page).to have_current_path(developer_app_path(@developer_app))
       expect(page).to have_content("App invitation accepted")

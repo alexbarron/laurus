@@ -11,7 +11,9 @@ feature "User login and logout" do
       click_link "Log In"
       fill_in "user_email", with: @user.email
       fill_in "user_password", with: "password"
-      click_on "Log in"
+      within(".actions") do
+        click_on "Log In"
+      end
 
       expect(page).to have_content "My Apps"
       expect(page).to have_content @user.name
@@ -33,9 +35,11 @@ feature "User login and logout" do
       click_link "Log In"
       fill_in "user_email", with: @user.email
       fill_in "user_password", with: "wrongpassword"
-      click_on "Log in"
+      within(".actions") do
+        click_on "Log In"
+      end
 
-      expect(page).to have_content "Log in"
+      expect(page).to have_content "Log In"
       expect(page).to have_content "Invalid Email or password"
     end
   end
