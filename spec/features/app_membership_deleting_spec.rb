@@ -31,13 +31,13 @@ feature "App membership deleting" do
       visit developer_app_path(@developer_app)
       click_link "Team Members"
 
-      expect(page).to have_css("td", exact_text: @teammate.name, visible: true, count: 1)
+      expect(page).to have_css("th", exact_text: @teammate.name, visible: true, count: 1)
       expect(page).to have_css("td", exact_text: "Read-only", visible: true, count: 1)
 
       click_link "Remove"
 
       expect(page).to have_content("#{@teammate.name} was removed from the app.")
-      expect(page).to have_css("td", exact_text: @teammate.name, visible: true, count: 0)
+      expect(page).to have_css("th", exact_text: @teammate.name, visible: true, count: 0)
       expect(page).to have_css("td", exact_text: "Read-only", visible: true, count: 0)
 
       # Ensure remove button does not appear for admin's own membership

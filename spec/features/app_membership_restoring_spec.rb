@@ -22,7 +22,7 @@ feature "App membership restoring" do
       click_link "Team Members"
       click_link "See Removed Members"
 
-      expect(page).to have_css("td", exact_text: @removed_user.name, visible: true, count: 1)
+      expect(page).to have_css("th", exact_text: @removed_user.name, visible: true, count: 1)
       expect(page).to have_css("td", exact_text: "Read-only", visible: true, count: 1)
       expect(page).not_to have_css("a", exact_text: "Restore", visible: true, count: 1)
     end
@@ -37,18 +37,18 @@ feature "App membership restoring" do
       visit developer_app_path(@developer_app)
       click_link "Team Members"
 
-      expect(page).to have_css("td", exact_text: @removed_user.name, visible: true, count: 0)
+      expect(page).to have_css("th", exact_text: @removed_user.name, visible: true, count: 0)
       expect(page).to have_css("td", exact_text: "Read-only", visible: true, count: 0)
 
       click_link "See Removed Members"
 
-      expect(page).to have_css("td", exact_text: @removed_user.name, visible: true, count: 1)
+      expect(page).to have_css("th", exact_text: @removed_user.name, visible: true, count: 1)
       expect(page).to have_css("td", exact_text: "Read-only", visible: true, count: 1)
 
       click_link "Restore"
 
       expect(page).to have_content("#{@removed_user.name} successfully restored")
-      expect(page).to have_css("td", exact_text: @removed_user.name, visible: true, count: 1)
+      expect(page).to have_css("th", exact_text: @removed_user.name, visible: true, count: 1)
       expect(page).to have_css("td", exact_text: "Read-only", visible: true, count: 1)
     end
   end

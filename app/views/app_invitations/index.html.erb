@@ -1,35 +1,40 @@
-<h3>Received Invitations</h3>
+<h3 class="mb-5 center text-2xl font-bold dark:text-white">Received Invitations</h3>
 
-<table class="table table-hover">
-  <thead class="thead-dark">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
-      <th>Developer App</th>
-      <th>Invitee</th>
-      <th>Invitee Email</th>
-      <th>Role</th>
-      <th>Invited By</th>
-      <th>Status</th>
+      <th scope="col" class="px-6 py-3">Developer App</th>
+      <th scope="col" class="px-6 py-3">Invitee</th>
+      <th scope="col" class="px-6 py-3">Invitee Email</th>
+      <th scope="col" class="px-6 py-3">Role</th>
+      <th scope="col" class="px-6 py-3">Invited By</th>
+      <th scope="col" class="px-6 py-3">Status</th>
     </tr>
   </thead>
   <% @received_invitations.each do |app_invitation| %>
     <%= render app_invitation, invitation_type: "received"%>
   <% end %>
 </table>
+</div>
 
-<h3>Sent Invitations</h3>
+<h3 class="mb-5 center text-2xl font-bold dark:text-white">Sent Invitations</h3>
 
-<table class="table table-hover">
-  <thead class="thead-dark">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
-      <th>Developer App</th>
-      <th>Invitee</th>
-      <th>Invitee Email</th>
-      <th>Role</th>
-      <th>Invited By</th>
-      <th>Status</th>
+      <th scope="col" class="px-6 py-3">Developer App</th>
+      <th scope="col" class="px-6 py-3">Invitee</th>
+      <th scope="col" class="px-6 py-3">Invitee Email</th>
+      <th scope="col" class="px-6 py-3">Role</th>
+      <th scope="col" class="px-6 py-3">Invited By</th>
+      <th scope="col" class="px-6 py-3">Status</th>
+      <th></th>
     </tr>
   </thead>
   <% @sent_invitations.each do |app_invitation| %>
     <%= render app_invitation, invitation_type: "sent" %>
   <% end %>
 </table>
+</div>

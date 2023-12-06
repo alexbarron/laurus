@@ -1,6 +1,6 @@
 <%= render 'app_header' %>
 
-<h3 class="center">Settings</h3>
+<h3 class="mb-5 center text-2xl font-bold dark:text-white">Settings</h3>
 <% if @current_user.platform_admin? || (@current_user_membership.active_admin? ) %>
     <%= link_to "Edit App", edit_developer_app_path(@developer_app), class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
     

@@ -1,8 +1,8 @@
 
-    <%= render 'app_header' %>
-    <h3 class="center">Activity Log</h3>
-        <ul>
-            <% @activities.each do |version| %>
-                <%= render_activity(version) %>
-            <% end %>
-        </ul>
+<%= render 'app_header' %>
+<h3 class="mb-5 center text-2xl font-bold dark:text-white">Activity Log</h3>
+<ol class="relative border-s border-gray-200 dark:border-gray-700">
+    <% @activities.each do |version| %>
+        <%= render_activity(version) %>
+    <% end %>
+</ol>

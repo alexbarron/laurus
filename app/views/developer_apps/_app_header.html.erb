@@ -1,15 +1,28 @@
-<div class="container">
-    <nav>
-        <ul class="nav navbar-nav navbar-left">
-            <li><%= link_to "Overview", @developer_app %></li>
-            <li><%= link_to "Activity", developer_app_activity_path(@developer_app) %></li>
-            <li><%= link_to "Team Members", developer_app_app_memberships_path(developer_app_id: @developer_app.id) %></li>
-            <li><%= link_to "Settings", developer_app_settings_path(@developer_app) %></li>
-        </ul>
-    </nav>
+<h4 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"><%= @developer_app.name %></h4>
+
+<div class="flex items-center">
+    <ul class="flex flex-row font-normal mt-0 space-x-8 rtl:space-x-reverse text-md text-gray-500 dark:text-gray-400">
+        <li>Client ID: <%= @developer_app.client_id %></li>
+        <li>Created: <%= @developer_app.created_at.strftime("%b %d, %Y") %></li>
+        <li>Status:
+            <% if @developer_app.archived_at? %>
+                <span class="text-yellow-500">Archived</span>
+            <% else %>
+                <span class="text-green-500">Active</span>
+            <% end %>
+        </li>
+    </ul>
 </div>
 
-<h3><%= @developer_app.name %></h3>
-<span><strong>Client ID: </strong><%= @developer_app.client_id %></span>
-<span><strong>Created: </strong><%= @developer_app.created_at.strftime("%b %d, %Y") %></span>
-<span><strong>Status: </strong><%= @developer_app.archived_at? ? "Archived" : "Active" %>
+<nav class="bg-gray-50 dark:bg-gray-700">
+    <div class="max-w-screen-xl px-4 py-3 mx-auto">
+        <div class="flex items-center">
+            <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+                <li><%= link_to "Overview", @developer_app, class: "text-gray-900 dark:text-white hover:underline" %></li>
+                <li><%= link_to "Activity", developer_app_activity_path(@developer_app), class: "text-gray-900 dark:text-white hover:underline"  %></li>
+                <li><%= link_to "Team Members", developer_app_app_memberships_path(developer_app_id: @developer_app.id), class: "text-gray-900 dark:text-white hover:underline"  %></li>
+                <li><%= link_to "Settings", developer_app_settings_path(@developer_app), class: "text-gray-900 dark:text-white hover:underline"  %></li>
+            </ul>
+        </div>
+    </div>
+</nav>

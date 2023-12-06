@@ -1,16 +1,28 @@
 <div id="<%= dom_id app_invitation %>">
-  <tr>
-      <td><%= app_invitation.developer_app.name %></td>
-      <td><%= app_invitation.invitee ? app_invitation.invitee.name : "" %></td>
-      <td><%= app_invitation.invitee_email %></td>
-      <td><%= app_invitation.admin ? "Admin" : "Read-only" %></td>
-      <td><%= app_invitation.inviter.name %></td>
-      <td><%= app_invitation.status %></td>
-      <% if invitation_type == "received" %>
-        <td><%= button_to "Accept", accept_app_invitation_path(developer_app_id: app_invitation.developer_app.id, id: app_invitation.id), method: :get, class: 'focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' unless app_invitation.closed %>
-        <td><%= button_to "Decline", decline_app_invitation_path(developer_app_id: app_invitation.developer_app.id, id: app_invitation.id), method: :get, class: 'btn btn-warning' unless app_invitation.closed %>
-      <% elsif invitation_type == "sent"%>
-        <td><%= button_to "Delete", app_invitation, method: :delete, class: 'focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900' %></td>
-      <% end %>
+  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <%= app_invitation.developer_app.name %>
+    </th>
+    <td class="px-6 py-4">
+        <%= app_invitation.invitee ? app_invitation.invitee.name : "" %>
+    </td>
+    <td class="px-6 py-4">
+        <%= app_invitation.invitee_email %>
+    </td>
+    <td class="px-6 py-4">
+        <%= app_invitation.admin ? "Admin" : "Read-only" %>
+    </td>
+    <td class="px-6 py-4">
+        <%= app_invitation.inviter.name %>
+    </td>
+    <td class="px-6 py-4">
+        <%= app_invitation.status %>
+    </td>
+    <% if invitation_type == "received" %>
+      <td class="px-6 py-4"><%= button_to "Accept", accept_app_invitation_path(developer_app_id: app_invitation.developer_app.id, id: app_invitation.id), method: :get, class: 'focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' unless app_invitation.closed %>
+      <td class="px-6 py-4"><%= button_to "Decline", decline_app_invitation_path(developer_app_id: app_invitation.developer_app.id, id: app_invitation.id), method: :get, class: 'btn btn-warning' unless app_invitation.closed %>
+    <% elsif invitation_type == "sent"%>
+      <td class="px-6 py-4"><%= button_to "Delete", app_invitation, method: :delete, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %></td>
+    <% end %>
   </tr>
 </div>

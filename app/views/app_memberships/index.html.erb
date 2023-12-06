@@ -1,41 +1,50 @@
 
 <%= render 'developer_apps/app_header' %>
-<h3 class="center">Team Members</h3>
-        <%= link_to "See Removed Members", removed_members_path(@developer_app), class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
-    <%= turbo_frame_tag("app-members") do %>
-    <table class="table table-hover">
-        <thead class="thead-dark">
+<h3 class="mb-5 center text-2xl font-bold dark:text-white">Team Members</h3>
+<%= turbo_frame_tag("app-members") do %>
+<div class="mb-5">
+<% if current_user.platform_admin? || @current_user_membership.admin? %>
+    <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' %>
+<% end %>
+</div>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-        <th>User</th>
-        <th>Email</th>
-        <th>Role</th>
+            <th scope="col" class="px-6 py-3">User</th>
+            <th scope="col" class="px-6 py-3">Email</th>
+            <th scope="col" class="px-6 py-3">Role</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
-
         <%= render @app_memberships %>
     </table>
+    </div>
+<div class="mt-5 mr-2 text-right">
+    <%= link_to "See Removed Members", removed_members_path(@developer_app), class: "font-medium text-blue-600 dark:text-blue-500 hover:underline text-right" %>
+</div>
 
-    <% if @sent_invitations.any? %>
-        <h4>Pending Invitations</h4>
 
-        <table class="table table-hover">
-        <thead class="thead-dark">
+<% if @sent_invitations.any? %>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<h4 class="mb-5 center text-2xl font-bold dark:text-white">Pending Invitations</h4>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-            <th>Developer App</th>
-            <th>Invitee</th>
-            <th>Invitee Email</th>
-            <th>Role</th>
-            <th>Invited By</th>
-            <th>Status</th>
+                <th scope="col" class="px-6 py-3">Developer App</th>
+                <th scope="col" class="px-6 py-3">Invitee</th>
+                <th scope="col" class="px-6 py-3">Invitee Email</th>
+                <th scope="col" class="px-6 py-3">Role</th>
+                <th scope="col" class="px-6 py-3">Invited By</th>
+                <th scope="col" class="px-6 py-3">Status</th>
+                <th></th>
             </tr>
         </thead>
         <% @sent_invitations.each do |app_invitation| %>
             <%= render app_invitation, invitation_type: "sent" %>
         <% end %>
         </table>
-    <% end %>
-
-    <% if current_user.platform_admin? || @current_user_membership.admin? %>
-        <%= link_to "Add Members", new_developer_app_app_invitation_path(@developer_app.id), class: 'text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' %>
+        </div>
     <% end %>
 <% end %>

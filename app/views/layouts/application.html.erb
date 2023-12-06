@@ -21,9 +21,9 @@
     ) %>
   </head>
 
-  <body>
+  <body class="bg-white dark:bg-gray-700">
     <%= render 'layouts/header' %>
-    <div class="container">
+    <div class="m-4">
       <% flash.each do |message_type, message| %>
         <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
       <% end %>

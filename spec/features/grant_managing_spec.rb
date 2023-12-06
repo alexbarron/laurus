@@ -49,14 +49,14 @@ feature "Managing API grants" do
       click_on "Set Grants"
 
       expect(page).to have_content "Developer app successfully updated"
-      expect(page).to have_content "#{@endpoint.method} #{@endpoint.path}"
+      expect(page).to have_content "#{@endpoint.path} #{@endpoint.method}"
 
       click_on "Manage Grants"
       uncheck
       click_on "Set Grants"
 
       expect(page).to have_content "Developer app successfully updated"
-      expect(page).not_to have_content "#{@endpoint.method} #{@endpoint.path}"
+      expect(page).not_to have_content "#{@endpoint.path} #{@endpoint.method}"
     end
 
     scenario "can manage grants for another user's app" do
@@ -70,14 +70,14 @@ feature "Managing API grants" do
       click_on "Set Grants"
 
       expect(page).to have_content "Developer app successfully updated"
-      expect(page).to have_content "#{@endpoint.method} #{@endpoint.path}"
+      expect(page).to have_content "#{@endpoint.path} #{@endpoint.method}"
 
       click_on "Manage Grants"
       uncheck
       click_on "Set Grants"
 
       expect(page).to have_content "Developer app successfully updated"
-      expect(page).not_to have_content "#{@endpoint.method} #{@endpoint.path}"
+      expect(page).not_to have_content "#{@endpoint.path} #{@endpoint.method}"
     end
   end
 end
