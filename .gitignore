@@ -43,3 +43,7 @@ notes.txt
 # Ignore node mmodules
 /node_modules/
 /mode_modules/*
+
+# Ignore builds
+/app/assets/builds/*
+!/app/assets/builds/.keep
