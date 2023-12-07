@@ -1,5 +1,5 @@
 module.exports = {
-  darkMode: 'media',
+  darkMode: 'class',
   content: [
     "./app/views/**/*.html.erb",
     "./app/helpers/**/*.rb",

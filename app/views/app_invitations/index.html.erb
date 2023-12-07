@@ -1,6 +1,6 @@
 <h3 class="mb-5 center text-2xl font-bold dark:text-white">Received Invitations</h3>
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="mb-5 relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
@@ -10,6 +10,8 @@
       <th scope="col" class="px-6 py-3">Role</th>
       <th scope="col" class="px-6 py-3">Invited By</th>
       <th scope="col" class="px-6 py-3">Status</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <% @received_invitations.each do |app_invitation| %>
