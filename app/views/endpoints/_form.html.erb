@@ -1,16 +1,16 @@
-<div class="flex items-center justify-center p-12">
+<div class="flex items-center justify-center">
     <div class="mx-auto w-full max-w-[550px]">
         <%= form_with model: @endpoint do |f| %>
             <div class="mb-5">
-                <%= f.label "Path", class: "mb-3 text-base font-medium text-[#07074D]" %>
+                <%= f.label "Path", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
                 <%= f.text_field :path, class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" %>
             </div>
             <div class="mb-5">
-                <%= f.label "Method", class: "mb-3 text-base font-medium text-[#07074D]" %>
+                <%= f.label "Method", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
                 <%= f.select(:method, ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], {include_blank: "Select method"}, { :class => "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" }) %>
             </div>
             <div class="mb-5">
-                <%= f.label "Description", class: "mb-3 text-base font-medium text-[#07074D]" %>
+                <%= f.label "Description", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
                 <%= f.text_area :description,  class: "w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" %>
             </div>
 

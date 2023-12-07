@@ -1,18 +1,24 @@
-<h3 class="center">New Endpoint</h3>
-<div class=="row">
-    <div class="col-md-5">
-    <%= render 'form' %>
+<div class="grid grid-cols-2 gap-3">
+    <div class="col-span-1">
+        <h4 class="text-2xl font-bold dark:text-white mb-5">Add an Endpoint</h4>
+        <%= render 'form' %>
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-5">
-    <h3 class="center">Import OpenAPI Spec</h3>
-    You can automatically create endpoints for all paths in an OpenAPI definition by uploading an OpenAPI spec file. Currently only .yml and .yaml versions are supported.
-
+    <div class="col-span-1">
+    <h4 class="text-2xl font-bold dark:text-white mb-5">Import OpenAPI Spec</h4>
+    <p class="mb-3 text-gray-500 dark:text-gray-400">
+        You can automatically create endpoints for all paths in an OpenAPI definition by uploading an OpenAPI spec file. Currently only .yml and .yaml versions are supported.
+    </p>
+        <p class="mb-3 text-gray-500 dark:text-gray-400">
+        The import process will not create duplicate endpoints. When the importer comes across an endpoint that already exists, it will update any attributes that are different in the OpenAPI spec file.
+    </p>
     <%= form_with url: endpoints_import_path do |f| %>
-        <span class="openapi_sec">
-            <%= f.file_field :openapi_spec, accept: 'yaml,yml' %>
+        <span class="openapi_spec">
+            <%= f.label "Upload file", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+            <%= f.file_field :openapi_spec, accept: 'yaml,yml', class: " block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" %>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">YML or YAML.</p>
         </span>
-        <%= f.submit "Import", class: "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+        <div class="mb-0.5"></div>
+        <%= f.submit "Import", class: "mt-5 hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none" %>
     <% end %>
     </div>
 </div>
