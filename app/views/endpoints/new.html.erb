@@ -6,7 +6,7 @@
     <div class="col-span-1">
     <h4 class="text-2xl font-bold dark:text-white mb-5">Import OpenAPI Spec</h4>
     <p class="mb-3 text-gray-500 dark:text-gray-400">
-        You can automatically create endpoints for all paths in an OpenAPI definition by uploading an OpenAPI spec file. Currently only .yml and .yaml versions are supported.
+        You can automatically create endpoints for all paths in an OpenAPI definition by uploading an OpenAPI YAML or JSON spec file.
     </p>
         <p class="mb-3 text-gray-500 dark:text-gray-400">
         The import process will not create duplicate endpoints. When the importer comes across an endpoint that already exists, it will update any attributes that are different in the OpenAPI spec file.
@@ -15,7 +15,7 @@
         <span class="openapi_spec">
             <%= f.label "Upload file", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
             <%= f.file_field :openapi_spec, accept: 'yaml,yml', class: " block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" %>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">YML or YAML.</p>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">YML, YAML, or JSON.</p>
         </span>
         <div class="mb-0.5"></div>
         <%= f.submit "Import", class: "mt-5 hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none" %>

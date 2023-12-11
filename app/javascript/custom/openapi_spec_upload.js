@@ -2,8 +2,8 @@
 
 document.addEventListener("turbo:load", function() {
     document.addEventListener("change", function(event) {
-        if (!hasExtension('openapi_spec',['.yml','.yaml'])) {
-            alert("File type not allowed,\nAllowed file types: *.yml,*.yaml");
+        if (!hasExtension('openapi_spec',['.yml','.yaml', '.json'])) {
+            alert("File type not allowed,\nAllowed file types: *.yml,*.yaml,*.json");
             document.getElementById('openapi_spec').value='';
         }
     });

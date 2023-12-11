@@ -3,7 +3,7 @@ module OpenAPIService
     attr_reader :parsed_spec
 
     def initialize(spec_file)
-      @parsed_spec = OpenAPIParser.parse(YAML.load_file(spec_file))
+      @parsed_spec = OpenAPIParser.load(spec_file)
     end
 
     def call
@@ -27,7 +27,7 @@ module OpenAPIService
           description: attributes.description
         )
       end
-    end
+    end 
 
     def import_paths
       parsed_spec.paths.raw_schema.each do |path, methods|
