@@ -4,7 +4,7 @@ class EndpointsController < ApplicationController
   before_action :set_endpoint, only: %i[edit update]
 
   def index
-    @endpoints = Endpoint.ordered_by_path.paginate(page: params[:page])
+    @endpoints = Endpoint.ordered_by_path.paginate(page: params[:page], per_page: 25)
   end
 
   def show
