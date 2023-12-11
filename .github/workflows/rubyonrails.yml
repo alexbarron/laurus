@@ -28,12 +28,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      # Add or replace dependency steps here
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
         with:
           bundler-cache: true
-      # Add or replace database setup steps here
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 19
+          cache: yarn
+      - name: Install packages
+        run: |
+          yarn install --pure-lockfile
+      - name: Build JS
+        run: yarn build:js
+      - name: Build CSS
+        run: yarn build:css
       - name: Set up database schema
         run: bin/rails db:schema:load
       # Run specs
